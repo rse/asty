@@ -1,5 +1,5 @@
 
-ASTY
+ASTy
 ====
 
 Generic Abstract Syntax Tree (AST)
@@ -28,20 +28,22 @@ $ bower install asty
 About
 -----
 
-ASTY is a Generic Abstract Syntax Tree (AST) library for JavaScript,
+ASTy is a Generic Abstract Syntax Tree (AST) library for JavaScript,
 i.e., it provides a hierarchical data structure for holding the syntax
 abstraction of an arbitrary formal language. It is usually used
 in combination with a parser generator like [PEG.js](http://pegjs.org/)
+(and then especially with its utility class [PEGUtil](http://github.com/rse/pegjs-util))
 to carry the results of the parsing step and to provide the vehicle
 for further processing of those results.
 
 Usage
 -----
 
-ASTY provides a class for the construction of a single AST node.
-The tree of AST nodes is formed by linking child nodes into
-a parent node. The class API (in a notation somewhat resembling TypeScript
-type definitions) is:
+ASTy provides a class for the construction of a single AST node. The
+tree of AST nodes is formed by linking child nodes into a parent node.
+The ASTy API, here assumed to be exposed through the variable `ASTY`,
+provides the following methods (in a notation somewhat resembling
+TypeScript type definitions) is:
 
 - `new ASTY(type: String, attrs?: {[name: String]: [value: Object]}, childs?: ASTY[]): ASTY`:<br/>
   Create a new ASTY node and optionally already set attributes and add child nodes.

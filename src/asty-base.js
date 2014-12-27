@@ -1,5 +1,5 @@
 /*
-**  asty -- Generic Abstract Syntax Tree (AST)
+**  ASTy -- Generic Abstract Syntax Tree (AST)
 **  Copyright (c) 2014 Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
