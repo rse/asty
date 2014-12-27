@@ -82,14 +82,17 @@ type definitions) is:
 - `ASTY#childs(): ASTY[]`:<br/>
   Get a nodes list of childs.
 
-- `ASTY#walk(callback: (node: ASTY, depth: Number, whenNow: String) => Void, when?: String): ASTY`:<br/>
-  Recursively walk the AST starting at this node (at depth 0). For each
-  visited node the `callback` function is called with the current node
-  and the tree depth. By default (and if `when` is either `before` or
-  `both`), the callback is called before(!) all child nodes are visited
-  and with `whenNow` set to `before`. If `when` is set to `after` or
-  `both`, the callback is called after(!) all child nodes are visited
-  ande with `whenNow` set to `after`.
+- `ASTY#walk(callback: (node: ASTY, depth: Number, parent: ASTY, when: String) => Void, when?: String): ASTY`:<br/>
+  Recursively walk the AST starting at this node (at depth 0). For
+  each visited node the `callback` function is called with the
+  current node, the current node's tree depth, the current node's
+  parent node and the current walking situation.  By default (and
+  if `when` is either `downward` or `both`), the callback is called
+  in the downward phase, i.e., before(!) all child nodes will be
+  visited, and with `when` set to `downward`. If `when` is set to
+  `upward` or `both`, the callback is called in the upward phase,
+  i.e., after(!) all child nodes were visited, and with `when` set
+  to `upward`.
 
 - `ASTY#dump(): String`:<br/>
   Returns a textual dump of the AST starting at the current node.

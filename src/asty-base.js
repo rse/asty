@@ -164,22 +164,22 @@ class ASTYBase {
     /*  walk the AST recursively  */
     walk (cb, when) {
         if (typeof when === "undefined")
-            when = "before"
-        var _walk = function (node, depth) {
-            if (when === "before" || when === "both")
-                cb.call(null, node, depth, "before")
-            node.C.forEach(function (child) { _walk(child, depth + 1) })
-            if (when === "after" || when === "both")
-                cb.call(null, node, depth, "after")
+            when = "downward"
+        var _walk = function (node, depth, parent) {
+            if (when === "downward" || when === "both")
+                cb.call(null, node, depth, parent, "downward")
+            node.C.forEach(function (child) { _walk(child, depth + 1, node) })
+            if (when === "upward" || when === "both")
+                cb.call(null, node, depth, parent, "upward")
         }
-        _walk(this, 0)
+        _walk(this, 0, null)
         return this
     }
 
     /*  dump the AST recursively  */
     dump () {
         var out = ""
-        this.walk(function (node, depth /*, when */) {
+        this.walk(function (node, depth /*, parent, when */) {
             for (var i = 0; i < depth; i++)
                 out += "    "
             out += node.T + " "
@@ -217,7 +217,7 @@ class ASTYBase {
                 out += ") "
             }
             out += "[" + node.P.L + "/" + node.P.C + "]\n"
-        }, "before")
+        }, "downward")
         return out
     }
 }
