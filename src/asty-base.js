@@ -126,13 +126,15 @@ class ASTYBase {
                 throw new Error("add: invalid AST node: " + JSON.stringify(node))
             C.push(node)
         }
-        var self = this
-        Array.prototype.slice.call(arguments, 0).forEach(function (arg) {
-            if (typeof arg === "object" && arg instanceof Array)
-                arg.forEach(function (child) { _add(self.C, child) })
-            else if (arg !== null)
-                _add(self.C, arg)
-        })
+        if (arguments !== null) {
+            var self = this
+            Array.prototype.slice.call(arguments, 0).forEach(function (arg) {
+                if (typeof arg === "object" && arg instanceof Array)
+                    arg.forEach(function (child) { _add(self.C, child) })
+                else if (arg !== null)
+                    _add(self.C, arg)
+            })
+        }
         return this
     }
 
