@@ -1,0 +1,19 @@
+{
+    "name":        "pegjs-util",
+    "version":     "0.9.5",
+    "description": "Utility Class for PEG.js",
+    "main":        "PEGUtil.js",
+    "homepage":    "https://github.com/rse/pegjs-util",
+    "license":     "MIT",
+    "authors": [
+        "Ralf S. Engelschall <rse@engelschall.com>"
+    ],
+    "keywords": [ "pegjs", "parser", "AST", "unroll" ],
+    "dependencies": {
+        "pegjs": "latest"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules"
+    ]
+}
