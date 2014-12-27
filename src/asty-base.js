@@ -22,7 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-class ASTBase {
+class ASTYBase {
     /*  constructor helper: AST node initialization  */
     init (T) {
         if (typeof T === "undefined")
@@ -222,5 +222,5 @@ class ASTBase {
     }
 }
 
-module.exports = ASTBase
+module.exports = ASTYBase
 

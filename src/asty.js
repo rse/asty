@@ -22,13 +22,13 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-var ASTBase  = require("./asty-base.js");
+var ASTYBase = require("./asty-base.js");
 var mixins   = require("./asty-mixins.js");
 
-var AST = class AST extends mixins(ASTBase) {
+var ASTY = class ASTY extends mixins(ASTYBase) {
     constructor () {
-        if (!(this instanceof AST)) {
-            var self = new AST("")
+        if (!(this instanceof ASTY)) {
+            var self = new ASTY("")
             return self.init.apply(self, arguments);
         }
         else
@@ -36,5 +36,5 @@ var AST = class AST extends mixins(ASTBase) {
     }
 }
 
-module.exports = AST
+module.exports = ASTY
 
