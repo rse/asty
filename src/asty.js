@@ -23,10 +23,11 @@
 */
 
 var ASTYBase  = require("./asty-base.js");
+var ASTYDump  = require("./asty-dump.js");
 var ASTYQuery = require("./asty-query.js");
 var mixins    = require("./asty-mixins.js");
 
-var ASTY = class ASTY extends mixins(ASTYBase, ASTYQuery) {
+var ASTY = class ASTY extends mixins(ASTYBase, ASTYDump, ASTYQuery) {
     constructor () {
         if (!(this instanceof ASTY)) {
             var self = new ASTY("")
