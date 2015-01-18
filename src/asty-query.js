@@ -22,20 +22,9 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-var ASTYBase  = require("./asty-base.js");
-var ASTYQuery = require("./asty-query.js");
-var mixins    = require("./asty-mixins.js");
-
-var ASTY = class ASTY extends mixins(ASTYBase, ASTYQuery) {
-    constructor () {
-        if (!(this instanceof ASTY)) {
-            var self = new ASTY("")
-            return self.init.apply(self, arguments);
-        }
-        else
-            return this.init.apply(this, arguments);
-    }
+class ASTQuery {
+    /*  FIXME: to be implemented soon  */
 }
 
-module.exports = ASTY
+module.exports = ASTQuery
 

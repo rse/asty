@@ -177,51 +177,6 @@ class ASTYBase {
         _walk(this, 0, null)
         return this
     }
-
-    /*  dump the AST recursively  */
-    dump () {
-        var out = ""
-        this.walk(function (node, depth /*, parent, when */) {
-            for (var i = 0; i < depth; i++)
-                out += "    "
-            out += node.T + " "
-            var keys = Object.keys(node.A)
-            if (keys.length > 0) {
-                out += "("
-                var first = true
-                keys.forEach(function (key) {
-                    if (!first)
-                        out += ", "
-                    else
-                        first = false
-                    out += key + ": "
-                    var value = node.A[key]
-                    switch (typeof value) {
-                        case "string":
-                            out += "\"" + value.replace(/\n/, "\\n").replace(/"/, "\\\"") + "\""
-                            break
-                        case "object":
-                            if (value instanceof RegExp)
-                                out += "/" +
-                                    value.toString()
-                                    .replace(/^\//, "")
-                                    .replace(/\/$/, "")
-                                    .replace(/\//g, "\\/") +
-                                "/"
-                            else
-                                out += JSON.stringify(value)
-                            break
-                        default:
-                            out += JSON.stringify(value)
-                            break
-                    }
-                })
-                out += ") "
-            }
-            out += "[" + node.P.L + "/" + node.P.C + "]\n"
-        }, "downward")
-        return out
-    }
 }
 
 module.exports = ASTYBase
