@@ -27,6 +27,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-browserify");
+    grunt.loadNpmTasks("grunt-mocha-test");
 
     grunt.initConfig({
         jshint: {
@@ -54,6 +55,15 @@ module.exports = function (grunt) {
                 }
             }
         },
+        mochaTest: {
+            "asty": {
+                src: [ "tst/*.js", "!tst/common.js" ]
+            },
+            options: {
+                reporter: "spec",
+                require: "tst/common.js"
+            }
+        },
         clean: {
             clean: [],
             distclean: [ "node_modules" ]
@@ -61,5 +71,6 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask("default", [ "jshint", "browserify" ]);
+    grunt.registerTask("test", [ "mochaTest" ]);
 };
 
