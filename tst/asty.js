@@ -23,16 +23,32 @@
 */
 
 describe("ASTy Library", function () {
-    it("basic functionality", function () {
+    it("node base functionality", function () {
         var ASTy = require("../lib/asty.js");
         var ast = new ASTy("foo");
         expect(ast).to.be.a("object")
-        expect(ast).to.include.keys("T", "A", "C", "P")
-        expect(ast.T).to.be.equal("foo")
+        expect(ast).to.include.keys("T", "L", "A", "P", "C")
+        expect(ast.type()).to.be.equal("foo")
         expect(ast).to.respondTo("type")
         expect(ast).to.respondTo("dump")
     })
-    it("extension functionality", function () {
+    it("node tree structure", function () {
+        var ASTy = require("../lib/asty.js");
+        var node1 = new ASTy("1");
+        var node11 = new ASTy("1.1");
+        var node12 = new ASTy("1.2");
+        var node121 = new ASTy("1.2.1");
+        var node122 = new ASTy("1.2.2");
+        node1.add(node11, node12)
+        node12.add(node121, node122)
+        expect(node1.parent()).to.be.equal(null)
+        expect(node1.childs()).to.have.members([ node11, node12 ])
+        expect(node12.parent()).to.be.equal(node1)
+        expect(node12.childs()).to.have.members([ node121, node122 ])
+        expect(node121.parent()).to.be.equal(node12)
+        expect(node122.parent()).to.be.equal(node12)
+    })
+    it("node extension functionality", function () {
         var ASTy = require("../lib/asty.js");
         ASTy.extend({
             foo: function (arg) {

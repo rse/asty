@@ -88,6 +88,9 @@ TypeScript type definitions) is:
 - `ASTY#childs(): ASTY[]`:<br/>
   Get a nodes list of childs.
 
+- `ASTY#parent(): ASTY[]`:<br/>
+  Get parent node.
+
 - `ASTY#walk(callback: (node: ASTY, depth: Number, parent: ASTY, when: String) => Void, when?: String): ASTY`:<br/>
   Recursively walk the AST starting at this node (at depth 0). For
   each visited node the `callback` function is called with the

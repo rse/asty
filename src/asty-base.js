@@ -27,10 +27,12 @@ class ASTYBase {
     init (T) {
         if (typeof T === "undefined")
             throw new Error("init: invalid argument")
+        this.ASTy = true
         this.T = T
+        this.L = { L: 0, C: 0, O: 0 }
         this.A = {}
         this.C = []
-        this.P = { L: 0, C: 0, O: 0 }
+        this.P = null
         return this
     }
 
@@ -74,11 +76,11 @@ class ASTYBase {
     /*  set the parsing position   */
     pos (L, C, O) {
         if (arguments.length === 0)
-            return this.P
+            return this.L
         else if (arguments.length <= 3) {
-            this.P.L = L || 0
-            this.P.C = C || 0
-            this.P.O = O || 0
+            this.L.L = L || 0
+            this.L.C = C || 0
+            this.L.O = O || 0
             return this
         }
         else
@@ -117,22 +119,24 @@ class ASTYBase {
     add () {
         if (arguments.length === 0)
             throw new Error("add: missing argument(s)")
-        var _add = function (C, node) {
-            if (!((typeof node   === "object") &&
-                  (typeof node.T === "string") &&
-                  (typeof node.P === "object") &&
-                  (typeof node.A === "object") &&
-                  (typeof node.C === "object" && node.C instanceof Array)))
-                throw new Error("add: invalid AST node: " + JSON.stringify(node))
-            C.push(node)
+        var _add = function (node, child) {
+            if (!((typeof child   === "object") &&
+                  (typeof child.T === "string") &&
+                  (typeof child.L === "object") &&
+                  (typeof child.A === "object") &&
+                  (typeof child.P === "object") &&
+                  (typeof child.C === "object" && child.C instanceof Array)))
+                throw new Error("add: invalid AST node: " + JSON.stringify(child))
+            node.C.push(child)
+            child.P = node
         }
         if (arguments !== null) {
             var self = this
             Array.prototype.slice.call(arguments, 0).forEach(function (arg) {
                 if (typeof arg === "object" && arg instanceof Array)
-                    arg.forEach(function (child) { _add(self.C, child) })
+                    arg.forEach(function (child) { _add(self, child) })
                 else if (arg !== null)
-                    _add(self.C, arg)
+                    _add(self, arg)
             })
         }
         return this
@@ -148,6 +152,7 @@ class ASTYBase {
             for (var j = 0; j < self.C.length; j++) {
                 if (self.C[j] === arg) {
                     self.C.splice(j, 1)
+                    arg.P = null
                     found = true
                     break
                 }
@@ -161,6 +166,11 @@ class ASTYBase {
     /*  get child AST nodes  */
     childs () {
         return this.C
+    }
+
+    /*  get parent AST node  */
+    parent () {
+        return this.P
     }
 
     /*  walk the AST recursively  */
