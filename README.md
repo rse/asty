@@ -45,6 +45,11 @@ The ASTy API, here assumed to be exposed through the variable `ASTY`,
 provides the following methods (in a notation somewhat resembling
 TypeScript type definitions) is:
 
+- `ASTY.extend(object: { [methodName: String]: [methodFunc: Function] }): Void`:<br/>
+  Extend the ASTY class with additional methods which are then available on each
+  AST node during instanciation. This actually extends the ASTY prototype and
+  should be used by extension modules only.
+
 - `new ASTY(type: String, attrs?: {[name: String]: [value: Object]}, childs?: ASTY[]): ASTY`:<br/>
   Create a new ASTY node and optionally already set attributes and add child nodes.
 

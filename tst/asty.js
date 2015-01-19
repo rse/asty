@@ -32,5 +32,17 @@ describe("ASTy Library", function () {
         expect(ast).to.respondTo("type")
         expect(ast).to.respondTo("dump")
     })
+    it("extension functionality", function () {
+        var ASTy = require("../lib/asty.js");
+        ASTy.extend({
+            foo: function (arg) {
+                return "<" + arg + ">"
+            }
+        })
+        var ast = new ASTy("foo");
+        expect(ast).to.be.a("object")
+        expect(ast).to.respondTo("foo")
+        expect(ast.foo("bar")).to.be.equal("<bar>");
+    })
 })
 

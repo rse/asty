@@ -22,12 +22,13 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-var ASTYBase  = require("./asty-base.js");
-var ASTYDump  = require("./asty-dump.js");
-var ASTYQuery = require("./asty-query.js");
-var mixins    = require("./asty-mixins.js");
+var ASTYBase = require("./asty-base.js");
+var ASTYDump = require("./asty-dump.js");
+var mixins   = require("./asty-mixins.js");
 
-var ASTY = class ASTY extends mixins(ASTYBase, ASTYDump, ASTYQuery) {
+/*  the base class  */
+var ASTY = class ASTY extends mixins(ASTYBase, ASTYDump) {
+    /*  the constructor mainly passes control to the init function  */
     constructor () {
         if (!(this instanceof ASTY)) {
             var self = new ASTY("")
@@ -36,6 +37,12 @@ var ASTY = class ASTY extends mixins(ASTYBase, ASTYDump, ASTYQuery) {
         else
             return this.init.apply(this, arguments);
     }
+}
+
+/*  static function for extending the class  */
+ASTY.extend = (methods) => {
+    for (var method in methods)
+        ASTY.prototype[method] = methods[method]
 }
 
 module.exports = ASTY
