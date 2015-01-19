@@ -63,7 +63,7 @@ class ASTYDump {
                 })
                 out += ") "
             }
-            out += "[" + node.P.L + "/" + node.P.C + "]\n"
+            out += "[" + node.L.L + "/" + node.L.C + "]\n"
         }, "downward")
         return out
     }
