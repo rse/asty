@@ -1,6 +1,6 @@
 {
     "name":        "asty",
-    "version":     "0.9.3",
+    "version":     "0.9.4",
     "description": "Generic Abstract Syntax Tree (AST)",
     "keywords":    [ "ast", "abstract", "syntax", "tree" ],
     "main":        "lib/asty.js",
