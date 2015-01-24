@@ -1,5 +1,5 @@
 ##
-##  ASTy -- Generic Abstract Syntax Tree (AST)
+##  ASTy -- Abstract Syntax Tree (AST) Data Structure
 ##  Copyright (c) 2014-2015 Ralf S. Engelschall <rse@engelschall.com>
 ##
 ##  Permission is hereby granted, free of charge, to any person obtaining

@@ -1,7 +1,7 @@
 {
     "name":        "asty",
     "version":     "0.9.1",
-    "description": "Generic Abstract Syntax Tree (AST)",
+    "description": "Abstract Syntax Tree (AST) Data Structure",
     "main":        "lib/asty.js",
     "homepage":    "https://github.com/rse/asty",
     "license":     "MIT",

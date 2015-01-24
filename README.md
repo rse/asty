@@ -2,7 +2,7 @@
 ASTy
 ====
 
-Generic Abstract Syntax Tree (AST)
+Abstract Syntax Tree (AST) Data Structure
 
 <p/>
 <img src="https://nodei.co/npm/asty.png?downloads=true&stars=true" alt=""/>
@@ -28,7 +28,7 @@ $ bower install asty
 About
 -----
 
-ASTy is a Generic Abstract Syntax Tree (AST) library for JavaScript,
+ASTy is a Abstract Syntax Tree (AST) Data Structure library for JavaScript,
 i.e., it provides a hierarchical data structure for holding the syntax
 abstraction of an arbitrary formal language. It is usually used
 in combination with a parser generator like [PEG.js](http://pegjs.org/)
