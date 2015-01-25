@@ -23,8 +23,8 @@
 */
 
 class ASTYBase {
-    /*  constructor helper: AST node initialization  */
-    init (T) {
+    /*  AST node initialization  */
+    init (T, A, C) {
         if (typeof T === "undefined")
             throw new Error("init: invalid argument")
         this.ASTy = true
@@ -33,31 +33,13 @@ class ASTYBase {
         this.A = {}
         this.C = []
         this.P = null
-        return this
-    }
-
-    /*  merge attributes and childs of an AST node  */
-    merge (node, takePos, attrMap) {
-        if (typeof node !== "object")
-            throw new Error("merge: invalid AST node argument")
-        if (typeof takePos === "undefined")
-            takePos = false
-        if (typeof attrMap === "undefined")
-            attrMap = {}
-        var self = this
-        if (takePos) {
-            var pos = node.pos()
-            self.pos(pos.L, pos.C, pos.O)
+        if (typeof A === "object") {
+            for (let name in A)
+                if (A.hasOwnProperty(name))
+                    this.set(name, A[name])
         }
-        node.attrs().forEach(function (attrSource) {
-            var attrTarget = (typeof attrMap[attrSource] !== "undefined" ?
-                attrMap[attrSource] : attrSource)
-            if (attrTarget !== null)
-                self.set(attrTarget, node.get(attrSource))
-        })
-        node.childs().forEach(function (child) {
-            self.add(child)
-        })
+        if (typeof C === "object" && C instanceof Array)
+            this.add(C)
         return this
     }
 
@@ -171,21 +153,6 @@ class ASTYBase {
     /*  get parent AST node  */
     parent () {
         return this.P
-    }
-
-    /*  walk the AST recursively  */
-    walk (cb, when) {
-        if (typeof when === "undefined")
-            when = "downward"
-        var _walk = function (node, depth, parent) {
-            if (when === "downward" || when === "both")
-                cb.call(null, node, depth, parent, "downward")
-            node.C.forEach(function (child) { _walk(child, depth + 1, node) })
-            if (when === "upward" || when === "both")
-                cb.call(null, node, depth, parent, "upward")
-        }
-        _walk(this, 0, null)
-        return this
     }
 }
 

@@ -39,59 +39,69 @@ for further processing of those results.
 Usage
 -----
 
-ASTy provides a class for the construction of a single AST node. The
-tree of AST nodes is formed by linking child nodes into a parent node.
-The ASTy API, here assumed to be exposed through the variable `ASTY`,
-provides the following methods (in a notation somewhat resembling
-TypeScript type definitions) is:
+ASTy provides a context (`ASTYCtx` below) for the creation of AST node
+(`ASTYNode` below). The tree of AST nodes is formed by linking child
+AST nodes into a parent AST node. The ASTy API, here assumed to be
+exposed through the variable `ASTY`, provides the following methods (in
+a notation somewhat resembling TypeScript type definitions):
 
-- `ASTY.extend(object: { [methodName: String]: [methodFunc: Function] }): Void`:<br/>
-  Extend the ASTY class with additional methods which are then available on each
-  AST node during instanciation. This actually extends the ASTY prototype and
-  should be used by extension modules only.
+### ASTy Context (ASTYCtx)
 
-- `new ASTY(type: String, attrs?: {[name: String]: [value: Object]}, childs?: ASTY[]): ASTY`:<br/>
-  Create a new ASTY node and optionally already set attributes and add child nodes.
+- `new ASTY(): ASTYCtx`:<br/>
+  Create a new instance of the ASTy context.
+  It internally captures the prototype (`ASTYNode`) of the AST nodes to be created.
 
-- `ASTY#merge(node: Node, takePos?: Boolean, attrMap?: {[from: String]: [to: (String|null)})): ASTY`:<br/>
+- `ASTYCtx#extend(object: { [methodName: String]: [methodFunc: Function] }): ASTYCtx`:<br/>
+  Extend the internal ASTYNode prototype with additional methods which are then available on each
+  ASTYNode instance when created with `ASTYCtx#create`. This should be used by ASTy extension modules only.
+
+- `ASTYCtx#create(type: String, attrs?: {[name: String]: [value: Object]}, childs?: ASTY[]): ASTYNode`:<br/>
+  Create a new ASTYNode instance of `type` and optionally already set attributes and add child nodes.
+
+- `ASTYCtx#isA(object: Object): Boolean`:<br/>
+  Check whether `object` is an ASTYNode instance.
+
+### ASTy Node (ASTYNode)
+
+- `ASTYNode#merge(node: Node, takePos?: Boolean, attrMap?: {[from: String]: [to: (String|null)})): ASTYNode`:<br/>
   Merge attributes, childs and optionally the position of a node.
   The attributes can be renamed or skipped (if mapped onto `null`).
 
-- `ASTY#type(type: String): Boolean`:<br/>
-  `ASTY#type(): String`:<br/>
+- `ASTYNode#type(type: String): Boolean`:<br/>
+  `ASTYNode#type(): String`:<br/>
   Set or get type of node.
 
-- `ASTY#pos(line: Number, column: Number, offset: Number): ASTY`:<br/>
-  `ASTY#pos(): Object`:<br/>
+- `ASTYNode#pos(line: Number, column: Number, offset: Number): ASTYNode`:<br/>
+  `ASTYNode#pos(): Object`:<br/>
   Set or get the position for the node.
 
-- `ASTY#set(name: String, value: Object): ASTY`:<br/>
+- `ASTYNode#set(name: String, value: Object): ASTYNode`:<br/>
   Set a single attribute `name` to `value`.
 
-- `ASTY#set({ [name: String]: [value: Object] }): ASTY`:<br/>
+- `ASTYNode#set({ [name: String]: [value: Object] }): ASTYNode`:<br/>
   Set multiple attributes, each consisting of name and value pairs.
 
-- `ASTY#get(name: String): Object`:<br/>
+- `ASTYNode#get(name: String): Object`:<br/>
   Get value of attribute `name`.
 
-- `ASTY#attrs(): String[]:<br/>
+- `ASTYNode#attrs(): String[]:<br/>
   Get names of all node attributes.
 
-- `ASTY#add(childs: ASTY[]): ASTY`:<br/>
+- `ASTYNode#add(childs: ASTYNode[]): ASTYNode`:<br/>
   Add one or more childs to a node. The array `childs`
-  can either contain ASTY objects or even arrays
-  of ASTY objects.
+  can either contain ASTYNode objects or even arrays
+  of ASTYNode objects.
 
-- `ASTY#del(childs: ASTY[]): ASTY`:<br/>
+- `ASTYNode#del(childs: ASTYNode[]): ASTYNode`:<br/>
   Delete one or more childs from a node.
 
-- `ASTY#childs(): ASTY[]`:<br/>
+- `ASTYNode#childs(): ASTYNode[]`:<br/>
   Get a nodes list of childs.
 
-- `ASTY#parent(): ASTY[]`:<br/>
+- `ASTYNode#parent(): ASTYNode`:<br/>
   Get parent node.
 
-- `ASTY#walk(callback: (node: ASTY, depth: Number, parent: ASTY, when: String) => Void, when?: String): ASTY`:<br/>
+- `ASTYNode#walk(callback: (node: ASTYNode, depth: Number, parent: ASTYNode, when: String) => Void, when?: String): ASTYNode`:<br/>
   Recursively walk the AST starting at this node (at depth 0). For
   each visited node the `callback` function is called with the
   current node, the current node's tree depth, the current node's
@@ -103,7 +113,7 @@ TypeScript type definitions) is:
   i.e., after(!) all child nodes were visited, and with `when` set
   to `upward`.
 
-- `ASTY#dump(maxDepth?: Number): String`:<br/>
+- `ASTYNode#dump(maxDepth?: Number): String`:<br/>
   Returns a textual dump of the AST starting at the current node. By
   default `maxDepth` is `Infinity` and this way the whole AST below the
   current node is dumped. If `maxDepth` is `0` only the current node is

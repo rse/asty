@@ -22,17 +22,22 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*  little helper function for ES6 style mixin support  */
-module.exports = function mixins () {
-    var cls = function () {};
-    for (var i = 0; i < arguments.length; i++) {
-        var mixin = arguments[i];
-        if (typeof mixin === "function")
-            mixin = mixin.prototype;
-        for (var key in mixin)
-            if (Object.prototype.hasOwnProperty.call(mixin, key))
-                cls.prototype[key] = mixin[key];
+class ASTYWalk {
+    /*  walk the AST recursively  */
+    walk (cb, when) {
+        if (typeof when === "undefined")
+            when = "downward"
+        var _walk = function (node, depth, parent) {
+            if (when === "downward" || when === "both")
+                cb.call(null, node, depth, parent, "downward")
+            node.C.forEach(function (child) { _walk(child, depth + 1, node) })
+            if (when === "upward" || when === "both")
+                cb.call(null, node, depth, parent, "upward")
+        }
+        _walk(this, 0, null)
+        return this
     }
-    return cls;
-};
+}
+
+module.exports = ASTYWalk
 

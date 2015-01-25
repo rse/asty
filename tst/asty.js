@@ -22,23 +22,26 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+var ASTy = require("../lib/asty.node.js");
+
 describe("ASTy Library", function () {
     it("node base functionality", function () {
-        var ASTy = require("../lib/asty.node.js");
-        var ast = new ASTy("foo");
-        expect(ast).to.be.a("object")
-        expect(ast).to.include.keys("T", "L", "A", "P", "C")
-        expect(ast.type()).to.be.equal("foo")
-        expect(ast).to.respondTo("type")
-        expect(ast).to.respondTo("dump")
+        var asty = new ASTy();
+        var node = asty.create("foo");
+        expect(asty.isA(node)).to.be.true
+        expect(node).to.be.a("object")
+        expect(node).to.include.keys("T", "L", "A", "P", "C")
+        expect(node.type()).to.be.equal("foo")
+        expect(node).to.respondTo("type")
+        expect(node).to.respondTo("dump")
     })
     it("node tree structure", function () {
-        var ASTy = require("../lib/asty.node.js");
-        var node1 = new ASTy("1");
-        var node11 = new ASTy("1.1");
-        var node12 = new ASTy("1.2");
-        var node121 = new ASTy("1.2.1");
-        var node122 = new ASTy("1.2.2");
+        var asty = new ASTy();
+        var node1 = asty.create("1");
+        var node11 = asty.create("1.1");
+        var node12 = asty.create("1.2");
+        var node121 = asty.create("1.2.1");
+        var node122 = asty.create("1.2.2");
         node1.add(node11, node12)
         node12.add(node121, node122)
         expect(node1.parent()).to.be.equal(null)
@@ -49,16 +52,16 @@ describe("ASTy Library", function () {
         expect(node122.parent()).to.be.equal(node12)
     })
     it("node extension functionality", function () {
-        var ASTy = require("../lib/asty.node.js");
-        ASTy.extend({
+        var asty = new ASTy();
+        asty.extend({
             foo: function (arg) {
                 return "<" + arg + ">"
             }
         })
-        var ast = new ASTy("foo");
-        expect(ast).to.be.a("object")
-        expect(ast).to.respondTo("foo")
-        expect(ast.foo("bar")).to.be.equal("<bar>");
+        var node = asty.create("foo");
+        expect(node).to.be.a("object")
+        expect(node).to.respondTo("foo")
+        expect(node.foo("bar")).to.be.equal("<bar>");
     })
 })
 

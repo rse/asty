@@ -22,42 +22,32 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-let ASTYBase  = require("./asty-base.js");
-let ASTYMerge = require("./asty-merge.js");
-let ASTYWalk  = require("./asty-walk.js");
-let ASTYDump  = require("./asty-dump.js");
-
-let ASTYCtx = class ASTYCtx {
-    constructor () {
-        if (!(this instanceof ASTYCtx))
-            return new ASTYCtx()
-        this.ASTYNode = () => {}
-        let mixins = [ ASTYBase, ASTYMerge, ASTYWalk, ASTYDump ]
-        mixins.forEach((mixin) => {
-            for (let method in mixin.prototype)
-                if (mixin.prototype.hasOwnProperty(method))
-                    this.ASTYNode.prototype[method] = mixin.prototype[method]
+class ASTYMerge {
+    /*  merge attributes and childs of an AST node  */
+    merge (node, takePos, attrMap) {
+        if (typeof node !== "object")
+            throw new Error("merge: invalid AST node argument")
+        if (typeof takePos === "undefined")
+            takePos = false
+        if (typeof attrMap === "undefined")
+            attrMap = {}
+        var self = this
+        if (takePos) {
+            var pos = node.pos()
+            self.pos(pos.L, pos.C, pos.O)
+        }
+        node.attrs().forEach(function (attrSource) {
+            var attrTarget = (typeof attrMap[attrSource] !== "undefined" ?
+                attrMap[attrSource] : attrSource)
+            if (attrTarget !== null)
+                self.set(attrTarget, node.get(attrSource))
+        })
+        node.childs().forEach(function (child) {
+            self.add(child)
         })
         return this
     }
-    extend (mixin) {
-        for (let method in mixin)
-            if (mixin.hasOwnProperty(method))
-                this.ASTYNode.prototype[method] = mixin[method]
-        return this
-    }
-    create (type) {
-        return (new this.ASTYNode()).init(type)
-    }
-    isA (node) {
-        return (
-               typeof node === "object"
-            && node instanceof this.ASTYNode
-            && typeof node.ASTy === "boolean"
-            && node.ASTy === true
-        )
-    }
 }
 
-module.exports = ASTYCtx
+module.exports = ASTYMerge
 
