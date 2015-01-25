@@ -38,19 +38,36 @@ module.exports = function (grunt) {
             "asty": [ "src/**/*.js" ]
         },
         browserify: {
-            "asty": {
+            "asty-browser": {
                 files: {
-                    "lib/asty.js": [ "src/**/*.js" ]
+                    "lib/asty.browser.js": [ "src/**/*.js" ]
                 },
                 options: {
                     transform: [ "6to5ify" ],
                     plugin: [
-                        [ "minifyify", { map: "asty.map", output: "lib/asty.map" } ],
+                        [ "minifyify", { map: "asty.browser.map", output: "lib/asty.browser.map" } ],
+                        [ "browserify-derequire" ],
                         [ "browserify-header" ]
                     ],
                     browserifyOptions: {
                         standalone: "ASTY",
                         debug: true
+                    }
+                }
+            },
+            "asty-node": {
+                files: {
+                    "lib/asty.node.js": [ "src/**/*.js" ]
+                },
+                options: {
+                    transform: [ "6to5ify" ],
+                    plugin: [
+                        [ "browserify-derequire" ],
+                        [ "browserify-header" ]
+                    ],
+                    browserifyOptions: {
+                        standalone: "ASTY",
+                        debug: false
                     }
                 }
             }

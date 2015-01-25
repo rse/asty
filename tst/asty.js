@@ -24,7 +24,7 @@
 
 describe("ASTy Library", function () {
     it("node base functionality", function () {
-        var ASTy = require("../lib/asty.js");
+        var ASTy = require("../lib/asty.node.js");
         var ast = new ASTy("foo");
         expect(ast).to.be.a("object")
         expect(ast).to.include.keys("T", "L", "A", "P", "C")
@@ -33,7 +33,7 @@ describe("ASTy Library", function () {
         expect(ast).to.respondTo("dump")
     })
     it("node tree structure", function () {
-        var ASTy = require("../lib/asty.js");
+        var ASTy = require("../lib/asty.node.js");
         var node1 = new ASTy("1");
         var node11 = new ASTy("1.1");
         var node12 = new ASTy("1.2");
@@ -49,7 +49,7 @@ describe("ASTy Library", function () {
         expect(node122.parent()).to.be.equal(node12)
     })
     it("node extension functionality", function () {
-        var ASTy = require("../lib/asty.js");
+        var ASTy = require("../lib/asty.node.js");
         ASTy.extend({
             foo: function (arg) {
                 return "<" + arg + ">"
