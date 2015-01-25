@@ -103,8 +103,12 @@ TypeScript type definitions) is:
   i.e., after(!) all child nodes were visited, and with `when` set
   to `upward`.
 
-- `ASTY#dump(): String`:<br/>
-  Returns a textual dump of the AST starting at the current node.
+- `ASTY#dump(maxDepth?: Number): String`:<br/>
+  Returns a textual dump of the AST starting at the current node. By
+  default `maxDepth` is `Infinity` and this way the whole AST below the
+  current node is dumped. If `maxDepth` is `0` only the current node is
+  dumped. If `maxDepth` is `1` the current node and all its direct child
+  nodes are dumped.
 
 License
 -------

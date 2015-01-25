@@ -24,9 +24,13 @@
 
 class ASTYDump {
     /*  dump the AST recursively  */
-    dump () {
+    dump (maxDepth) {
+        if (maxDepth === undefined)
+            maxDepth = Infinity
         var out = ""
         this.walk(function (node, depth /*, parent, when */) {
+            if (depth > maxDepth)
+                return
             for (var i = 0; i < depth; i++)
                 out += "    "
             out += node.T + " "
