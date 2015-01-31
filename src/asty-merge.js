@@ -31,19 +31,21 @@ class ASTYMerge {
             takePos = false
         if (typeof attrMap === "undefined")
             attrMap = {}
-        var self = this
         if (takePos) {
-            var pos = node.pos()
-            self.pos(pos.L, pos.C, pos.O)
+            let pos = node.pos()
+            this.pos(pos.L, pos.C, pos.O)
         }
-        node.attrs().forEach(function (attrSource) {
-            var attrTarget = (typeof attrMap[attrSource] !== "undefined" ?
-                attrMap[attrSource] : attrSource)
+        node.attrs().forEach((attrSource) => {
+            let attrTarget = (
+                  typeof attrMap[attrSource] !== "undefined"
+                ? attrMap[attrSource]
+                : attrSource
+            )
             if (attrTarget !== null)
-                self.set(attrTarget, node.get(attrSource))
+                this.set(attrTarget, node.get(attrSource))
         })
-        node.childs().forEach(function (child) {
-            self.add(child)
+        node.childs().forEach((child) => {
+            this.add(child)
         })
         return this
     }

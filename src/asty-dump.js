@@ -27,24 +27,24 @@ class ASTYDump {
     dump (maxDepth) {
         if (maxDepth === undefined)
             maxDepth = Infinity
-        var out = ""
-        this.walk(function (node, depth /*, parent, when */) {
+        let out = ""
+        this.walk((node, depth /*, parent, when */) => {
             if (depth > maxDepth)
                 return
-            for (var i = 0; i < depth; i++)
+            for (let i = 0; i < depth; i++)
                 out += "    "
             out += node.T + " "
-            var keys = Object.keys(node.A)
+            let keys = Object.keys(node.A)
             if (keys.length > 0) {
                 out += "("
-                var first = true
-                keys.forEach(function (key) {
+                let first = true
+                keys.forEach((key) => {
                     if (!first)
                         out += ", "
                     else
                         first = false
                     out += key + ": "
-                    var value = node.A[key]
+                    let value = node.A[key]
                     switch (typeof value) {
                         case "string":
                             out += "\"" + value.replace(/\n/, "\\n").replace(/"/, "\\\"") + "\""

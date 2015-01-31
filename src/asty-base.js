@@ -72,9 +72,10 @@ class ASTYBase {
     /*  set AST node attributes  */
     set () {
         if (arguments.length === 1 && typeof arguments[0] === "object") {
-            var self = this
-            var args = arguments
-            Object.keys(args[0]).forEach(function (key) { self.A[key] = args[0][key]; })
+            let args = arguments
+            Object.keys(args[0]).forEach((key) => {
+                this.A[key] = args[0][key]
+            })
         }
         else if (arguments.length === 2)
             this.A[arguments[0]] = arguments[1]
@@ -101,7 +102,7 @@ class ASTYBase {
     add () {
         if (arguments.length === 0)
             throw new Error("add: missing argument(s)")
-        var _add = function (node, child) {
+        let _add = (node, child) => {
             if (!((typeof child   === "object") &&
                   (typeof child.T === "string") &&
                   (typeof child.L === "object") &&
@@ -113,12 +114,11 @@ class ASTYBase {
             child.P = node
         }
         if (arguments !== null) {
-            var self = this
-            Array.prototype.slice.call(arguments, 0).forEach(function (arg) {
+            Array.prototype.slice.call(arguments, 0).forEach((arg) => {
                 if (typeof arg === "object" && arg instanceof Array)
-                    arg.forEach(function (child) { _add(self, child) })
+                    arg.forEach((child) => { _add(this, child) })
                 else if (arg !== null)
-                    _add(self, arg)
+                    _add(this, arg)
             })
         }
         return this
@@ -128,12 +128,11 @@ class ASTYBase {
     del () {
         if (arguments.length === 0)
             throw new Error("del: invalid argument")
-        var self = this
-        Array.prototype.slice.call(arguments, 0).forEach(function (arg) {
-            var found = false
-            for (var j = 0; j < self.C.length; j++) {
-                if (self.C[j] === arg) {
-                    self.C.splice(j, 1)
+        Array.prototype.slice.call(arguments, 0).forEach((arg) => {
+            let found = false
+            for (let j = 0; j < this.C.length; j++) {
+                if (this.C[j] === arg) {
+                    this.C.splice(j, 1)
                     arg.P = null
                     found = true
                     break

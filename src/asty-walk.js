@@ -27,10 +27,12 @@ class ASTYWalk {
     walk (cb, when) {
         if (typeof when === "undefined")
             when = "downward"
-        var _walk = function (node, depth, parent) {
+        let _walk = (node, depth, parent) => {
             if (when === "downward" || when === "both")
                 cb.call(null, node, depth, parent, "downward")
-            node.C.forEach(function (child) { _walk(child, depth + 1, node) })
+            node.C.forEach((child) => {
+                _walk(child, depth + 1, node)
+            })
             if (when === "upward" || when === "both")
                 cb.call(null, node, depth, parent, "upward")
         }
