@@ -120,6 +120,19 @@ a notation somewhat resembling TypeScript type definitions):
   dumped. If `maxDepth` is `1` the current node and all its direct child
   nodes are dumped.
 
+Implementation Notice
+---------------------
+
+Although ASTy is written in ECMAScript 6, it is transpiled to ECMAScript
+5 and this way runs in really all(!) current (as of 2015) JavaScript
+environments, of course.
+
+Additionally, there are two transpilation results: first, there is
+`asty.browser.js` (plus `asty.browser.map`) for Browser environments.
+This is a size-compressed variant but still with source-map for
+debugging. Second, there is `asty.node.js` for Node.js/IO.js
+environments. This is a variant without compression and no source-maps.
+
 License
 -------
 
