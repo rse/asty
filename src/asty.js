@@ -32,11 +32,17 @@ let ASTYCtx = class ASTYCtx {
         if (!(this instanceof ASTYCtx))
             return new ASTYCtx()
         this.ASTYNode = () => {}
-        let mixins = [ ASTYBase, ASTYMerge, ASTYWalk, ASTYDump ]
+        let mixins = [
+            [ ASTYBase,  "init", "type", "pos", "set", "get", "attrs", "add", "del", "childs", "parent" ],
+            [ ASTYMerge, "merge" ],
+            [ ASTYWalk,  "walk" ],
+            [ ASTYDump,  "dump" ]
+        ]
         mixins.forEach((mixin) => {
-            for (let method in mixin.prototype)
-                if (mixin.prototype.hasOwnProperty(method))
-                    this.ASTYNode.prototype[method] = mixin.prototype[method]
+            let proto = mixin[0].prototype
+            mixin.slice(1).forEach((method) => {
+                this.ASTYNode.prototype[method] = proto[method]
+            })
         })
         return this
     }
