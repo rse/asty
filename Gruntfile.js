@@ -34,9 +34,9 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: "jshint.json"
             },
-            "gruntfile":  [ "Gruntfile.js" ],
-            "asty": [ "src/**/*.js" ],
-            "asty-tst": [ "tst/**/*.js" ]
+            "gruntfile": [ "Gruntfile.js" ],
+            "asty-src":  [ "src/**/*.js" ],
+            "asty-tst":  [ "tst/**/*.js" ]
         },
         browserify: {
             "asty-browser": {
@@ -87,7 +87,6 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask("default", [ "jshint", "browserify" ]);
-    grunt.registerTask("test", [ "mochaTest" ]);
+    grunt.registerTask("default", [ "jshint", "browserify", "mochaTest" ]);
 };
 
