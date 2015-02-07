@@ -35,7 +35,8 @@ module.exports = function (grunt) {
                 jshintrc: "jshint.json"
             },
             "gruntfile":  [ "Gruntfile.js" ],
-            "asty": [ "src/**/*.js" ]
+            "asty": [ "src/**/*.js" ],
+            "asty-tst": [ "tst/**/*.js" ]
         },
         browserify: {
             "asty-browser": {
@@ -74,11 +75,10 @@ module.exports = function (grunt) {
         },
         mochaTest: {
             "asty": {
-                src: [ "tst/*.js", "!tst/common.js" ]
+                src: [ "tst/*.js" ]
             },
             options: {
-                reporter: "spec",
-                require: "tst/common.js"
+                reporter: "spec"
             }
         },
         clean: {
