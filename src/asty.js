@@ -22,15 +22,13 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-let ASTYBase  = require("./asty-base.js");
-let ASTYMerge = require("./asty-merge.js");
-let ASTYWalk  = require("./asty-walk.js");
-let ASTYDump  = require("./asty-dump.js");
+let ASTYBase  = require("./asty-base.js")
+let ASTYMerge = require("./asty-merge.js")
+let ASTYWalk  = require("./asty-walk.js")
+let ASTYDump  = require("./asty-dump.js")
 
 let ASTYCtx = class ASTYCtx {
     constructor () {
-        if (!(this instanceof ASTYCtx))
-            return new ASTYCtx()
         this.ASTYNode = () => {}
         let mixins = [
             [ ASTYBase,  "init", "type", "pos", "set", "get", "attrs", "add", "del", "childs", "parent" ],
