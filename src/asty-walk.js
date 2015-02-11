@@ -22,7 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-class ASTYWalk {
+export default class ASTYWalk {
     /*  walk the AST recursively  */
     walk (cb, when) {
         if (typeof when === "undefined")
@@ -40,6 +40,4 @@ class ASTYWalk {
         return this
     }
 }
-
-module.exports = ASTYWalk
 

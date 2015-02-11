@@ -22,7 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-class ASTYDump {
+export default class ASTYDump {
     /*  dump the AST recursively  */
     dump (maxDepth) {
         if (maxDepth === undefined)
@@ -72,6 +72,4 @@ class ASTYDump {
         return out
     }
 }
-
-module.exports = ASTYDump
 

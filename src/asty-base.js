@@ -22,7 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-class ASTYBase {
+export default class ASTYBase {
     /*  AST node initialization  */
     init (T, A, C) {
         if (typeof T === "undefined")
@@ -154,6 +154,4 @@ class ASTYBase {
         return this.P
     }
 }
-
-module.exports = ASTYBase
 

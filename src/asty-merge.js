@@ -22,7 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-class ASTYMerge {
+export default class ASTYMerge {
     /*  merge attributes and childs of an AST node  */
     merge (node, takePos, attrMap) {
         if (typeof node !== "object")
@@ -50,6 +50,4 @@ class ASTYMerge {
         return this
     }
 }
-
-module.exports = ASTYMerge
 

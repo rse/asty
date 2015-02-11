@@ -22,13 +22,13 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-let ASTYBase    = require("./asty-base.js")
-let ASTYMerge   = require("./asty-merge.js")
-let ASTYWalk    = require("./asty-walk.js")
-let ASTYDump    = require("./asty-dump.js")
-let ASTYVersion = require("./asty-version.js")
+import ASTYBase    from "./asty-base.js"
+import ASTYMerge   from "./asty-merge.js"
+import ASTYWalk    from "./asty-walk.js"
+import ASTYDump    from "./asty-dump.js"
+import ASTYVersion from "./asty-version.js"
 
-let ASTYCtx = class ASTYCtx {
+export default class ASTYCtx {
     constructor () {
         this.ASTYNode = () => {}
         let mixins = [
@@ -66,6 +66,4 @@ let ASTYCtx = class ASTYCtx {
         )
     }
 }
-
-module.exports = ASTYCtx
 
