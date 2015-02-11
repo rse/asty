@@ -31,6 +31,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-jscs");
 
     grunt.initConfig({
+        version: grunt.file.readYAML("VERSION.yml"),
         jshint: {
             options: {
                 jshintrc: "jshint.json"
@@ -56,7 +57,15 @@ module.exports = function (grunt) {
                     "lib/asty.browser.js": [ "src/**/*.js" ]
                 },
                 options: {
-                    transform: [ "6to5ify" ],
+                    transform: [
+                        [ "browserify-replace", { replace: [
+                            { from: /\$major/g, to: "<%= version.major %>" },
+                            { from: /\$minor/g, to: "<%= version.minor %>" },
+                            { from: /\$micro/g, to: "<%= version.micro %>" },
+                            { from: /\$date/g,  to: "<%= version.date  %>" }
+                        ]}],
+                        "6to5ify"
+                    ],
                     plugin: [
                         [ "minifyify", { map: "asty.browser.map", output: "lib/asty.browser.map" } ],
                         [ "browserify-derequire" ],
@@ -73,7 +82,15 @@ module.exports = function (grunt) {
                     "lib/asty.node.js": [ "src/**/*.js" ]
                 },
                 options: {
-                    transform: [ "6to5ify" ],
+                    transform: [
+                        [ "browserify-replace", { replace: [
+                            { from: /\$major/g, to: "<%= version.major %>" },
+                            { from: /\$minor/g, to: "<%= version.minor %>" },
+                            { from: /\$micro/g, to: "<%= version.micro %>" },
+                            { from: /\$date/g,  to: "<%= version.date  %>" }
+                        ]}],
+                        "6to5ify"
+                    ],
                     plugin: [
                         [ "browserify-derequire" ],
                         [ "browserify-header" ]

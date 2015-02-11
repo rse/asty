@@ -22,10 +22,11 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-let ASTYBase  = require("./asty-base.js")
-let ASTYMerge = require("./asty-merge.js")
-let ASTYWalk  = require("./asty-walk.js")
-let ASTYDump  = require("./asty-dump.js")
+let ASTYBase    = require("./asty-base.js")
+let ASTYMerge   = require("./asty-merge.js")
+let ASTYWalk    = require("./asty-walk.js")
+let ASTYDump    = require("./asty-dump.js")
+let ASTYVersion = require("./asty-version.js")
 
 let ASTYCtx = class ASTYCtx {
     constructor () {
@@ -43,6 +44,9 @@ let ASTYCtx = class ASTYCtx {
             })
         })
         return this
+    }
+    version () {
+        return ASTYVersion
     }
     extend (mixin) {
         for (let method in mixin)
