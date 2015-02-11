@@ -24,6 +24,7 @@
 
 /* global describe: false */
 /* global it: false */
+/* jshint -W030 */
 
 var chai = require("chai")
 var expect = chai.expect
@@ -35,7 +36,7 @@ describe("ASTy Library", function () {
     it("node base functionality", function () {
         var asty = new ASTy()
         var node = asty.create("foo")
-        expect(asty.isA(node)).to.be.true()
+        expect(asty.isA(node)).to.be.true
         expect(node).to.be.a("object")
         expect(node).to.include.keys("T", "L", "A", "P", "C")
         expect(node.type()).to.be.equal("foo")
