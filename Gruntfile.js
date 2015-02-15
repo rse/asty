@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                             { from: /\$micro/g, to: "<%= version.micro %>" },
                             { from: /\$date/g,  to: "<%= version.date  %>" }
                         ]}],
-                        "6to5ify"
+                        "babelify"
                     ],
                     plugin: [
                         [ "minifyify", { map: "asty.browser.map", output: "lib/asty.browser.map" } ],
@@ -89,7 +89,7 @@ module.exports = function (grunt) {
                             { from: /\$micro/g, to: "<%= version.micro %>" },
                             { from: /\$date/g,  to: "<%= version.date  %>" }
                         ]}],
-                        "6to5ify"
+                        "babelify"
                     ],
                     plugin: [
                         [ "browserify-derequire" ],

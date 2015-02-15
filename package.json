@@ -1,6 +1,6 @@
 {
     "name":        "asty",
-    "version":     "1.0.4",
+    "version":     "1.0.5",
     "description": "Abstract Syntax Tree (AST) Data Structure",
     "keywords":    [ "ast", "abstract", "syntax", "tree", "data", "structure" ],
     "main":        "lib/asty.node.js",
@@ -28,7 +28,7 @@
         "grunt-mocha-test":     "~0.12.7",
         "grunt-jscs":           "~1.5.0",
         "chai":                 "~2.0.0",
-        "6to5ify":              "~4.1.0",
+        "babelify":             "~5.0.3",
         "minifyify":            "~6.1.0",
         "browserify-header":    "~0.9.1",
         "browserify-derequire": "~0.9.1",
