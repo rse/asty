@@ -109,7 +109,7 @@ export default class ASTYBase {
                   (typeof child.A === "object") &&
                   (typeof child.P === "object") &&
                   (typeof child.C === "object" && child.C instanceof Array)))
-                throw new Error("add: invalid AST node: " + JSON.stringify(child))
+                throw new Error(`add: invalid AST node: ${ JSON.stringify(child) }`)
             node.C.push(child)
             child.P = node
         }
