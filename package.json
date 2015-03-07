@@ -1,6 +1,6 @@
 {
     "name":        "asty",
-    "version":     "1.0.8",
+    "version":     "1.0.9",
     "description": "Abstract Syntax Tree (AST) Data Structure",
     "keywords":    [ "ast", "abstract", "syntax", "tree", "data", "structure" ],
     "main":        "lib/asty.node.js",
