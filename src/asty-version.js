@@ -27,7 +27,7 @@
 /* global $micro: false */
 /* global $date:  false */
 
-let version = {
+const version = {
     major: $major,
     minor: $minor,
     micro: $micro,
