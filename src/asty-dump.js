@@ -47,7 +47,7 @@ export default class ASTYDump {
                     let value = node.A[key]
                     switch (typeof value) {
                         case "string":
-                            out += "\"" + value.replace(/\n/, "\\n").replace(/"/, "\\\"") + "\""
+                            out += "\"" + value.replace(/\n/g, "\\n").replace(/"/g, "\\\"") + "\""
                             break
                         case "object":
                             if (value instanceof RegExp)
