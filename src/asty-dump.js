@@ -47,16 +47,24 @@ export default class ASTYDump {
                     let value = node.A[key]
                     switch (typeof value) {
                         case "string":
-                            out += "\"" + value.replace(/\n/g, "\\n").replace(/"/g, "\\\"") + "\""
+                            let hex = (ch) => ch.charCodeAt(0).toString(16).toUpperCase()
+                            out += "\"" +
+                                value.replace(/\\/g, "\\\\")
+                                    .replace(/"/g, "\\\"")
+                                    .replace(/\x08/g, "\\b")
+                                    .replace(/\t/g, "\\t")
+                                    .replace(/\n/g, "\\n")
+                                    .replace(/\f/g, "\\f")
+                                    .replace(/\r/g, "\\r")
+                                    .replace(/[\x00-\x07\x0B\x0E\x0F]/g, (ch) => "\\x0" + hex(ch))
+                                    .replace(/[\x10-\x1F\x80-\xFF]/g,    (ch) => "\\x"  + hex(ch))
+                                    .replace(/[\u0100-\u0FFF]/g,         (ch) => "\\u0" + hex(ch))
+                                    .replace(/[\u1000-\uFFFF]/g,         (ch) => "\\u"  + hex(ch)) +
+                                "\""
                             break
                         case "object":
                             if (value instanceof RegExp)
-                                out += "/" +
-                                    value.toString()
-                                    .replace(/^\//, "")
-                                    .replace(/\/$/, "")
-                                    .replace(/\//g, "\\/") +
-                                "/"
+                                out += value.source
                             else
                                 out += JSON.stringify(value)
                             break
