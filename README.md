@@ -51,6 +51,9 @@ a notation somewhat resembling TypeScript type definitions):
   Create a new instance of the ASTy context.
   It internally captures the prototype (`ASTYNode`) of the AST nodes to be created.
 
+- `ASTYCtx#version(): { major: Number, minor: Number, micro: Number, date: Number }`:<br/>
+  Return the ASTy version detals. The date is in numeric format `YYYYMMDD`.
+
 - `ASTYCtx#extend(object: { [methodName: String]: [methodFunc: Function] }): ASTYCtx`:<br/>
   Extend the internal ASTYNode prototype with additional methods which are then available on each
   ASTYNode instance when created with `ASTYCtx#create`. This should be used by ASTy extension modules only.
@@ -60,6 +63,12 @@ a notation somewhat resembling TypeScript type definitions):
 
 - `ASTYCtx#isA(object: Object): Boolean`:<br/>
   Check whether `object` is an ASTYNode instance.
+
+- `ASTYCtx#serialize(node: ASTYNode): String`:<br/>
+  Serializes (formats) ASTy nodes to JSON string. Use this for exporting an AST.
+
+- `ASTYCtx#unserialize(json: String): ASTYNode`:<br/>
+  Unserializes (parses) JSON string to ASTy nodes. Use this for importing an AST.
 
 ### ASTy Node (ASTYNode)
 
