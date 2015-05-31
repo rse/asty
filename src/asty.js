@@ -22,11 +22,12 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import ASTYBase    from "./asty-base.js"
-import ASTYMerge   from "./asty-merge.js"
-import ASTYWalk    from "./asty-walk.js"
-import ASTYDump    from "./asty-dump.js"
-import ASTYVersion from "./asty-version.js"
+import ASTYBase      from "./asty-base.js"
+import ASTYMerge     from "./asty-merge.js"
+import ASTYWalk      from "./asty-walk.js"
+import ASTYDump      from "./asty-dump.js"
+import ASTYSerialize from "./asty-serialize.js"
+import ASTYVersion   from "./asty-version.js"
 
 export default class ASTYCtx {
     constructor () {
@@ -64,6 +65,12 @@ export default class ASTYCtx {
             && typeof node.ASTy === "boolean"
             && node.ASTy === true
         )
+    }
+    serialize (node) {
+        return ASTYSerialize.serialize(this, node)
+    }
+    unserialize (json) {
+        return ASTYSerialize.unserialize(this, json)
     }
 }
 
