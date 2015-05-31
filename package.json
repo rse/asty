@@ -4,6 +4,7 @@
     "description": "Abstract Syntax Tree (AST) Data Structure",
     "keywords":    [ "ast", "abstract", "syntax", "tree", "data", "structure" ],
     "main":        "lib/asty.node.js",
+    "license":     "MIT",
     "repository": {
         "type": "git",
         "url":  "https://github.com/rse/asty.git"
@@ -13,10 +14,6 @@
         "email": "rse@engelschall.com",
         "url":   "http://engelschall.com"
     },
-    "licenses": [{
-        "type": "MIT",
-        "url":  "http://opensource.org/licenses/MIT"
-    }],
     "homepage": "https://github.com/rse/asty",
     "bugs":     "https://github.com/rse/asty/issues",
     "devDependencies": {
