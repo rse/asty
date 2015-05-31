@@ -72,7 +72,7 @@ a notation somewhat resembling TypeScript type definitions):
   Set or get type of node.
 
 - `ASTYNode#pos(line: Number, column: Number, offset: Number): ASTYNode`:<br/>
-  `ASTYNode#pos(): Object`:<br/>
+  `ASTYNode#pos(): { line: Number, column: Number, offset: Number }`:<br/>
   Set or get the position for the node.
 
 - `ASTYNode#set(name: String, value: Object): ASTYNode`:<br/>

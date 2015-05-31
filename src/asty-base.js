@@ -56,13 +56,17 @@ export default class ASTYBase {
     }
 
     /*  set the parsing position   */
-    pos (L, C, O) {
+    pos (line, column, offset) {
         if (arguments.length === 0)
-            return this.L
+            return {
+                line:   this.L.L,
+                column: this.L.C,
+                offset: this.L.O
+            }
         else if (arguments.length <= 3) {
-            this.L.L = L || 0
-            this.L.C = C || 0
-            this.L.O = O || 0
+            this.L.L = line   || 0
+            this.L.C = column || 0
+            this.L.O = offset || 0
             return this
         }
         else
