@@ -24,9 +24,10 @@
 
 export default class ASTYBase {
     /*  AST node initialization  */
-    init (T, A, C) {
-        if (typeof T === "undefined")
-            throw new Error("init: invalid argument")
+    init (ctx, T, A, C) {
+        if (arguments.length < 2)
+            throw new Error("init: invalid number of arguments")
+        this.ctx = ctx
         this.ASTy = true
         this.T = T
         this.L = { L: 0, C: 0, O: 0 }
@@ -74,31 +75,33 @@ export default class ASTYBase {
     }
 
     /*  set AST node attributes  */
-    set () {
-        if (arguments.length === 1 && typeof arguments[0] === "object") {
-            let args = arguments
+    set (...args) {
+        if (   args.length === 1
+            && typeof args[0] === "object") {
             Object.keys(args[0]).forEach((key) => {
                 this.A[key] = args[0][key]
             })
         }
-        else if (arguments.length === 2)
-            this.A[arguments[0]] = arguments[1]
+        else if (args.length === 2)
+            this.A[args[0]] = args[1]
         else
-            throw new Error("set: invalid arguments")
+            throw new Error("set: invalid number of arguments")
         return this
     }
 
     /*  unset AST node attributes  */
-    unset () {
-        if (arguments.length === 1 && typeof arguments[0] === "object" && arguments[0] instanceof Array) {
-            arguments[0].forEach((key) => {
+    unset (...args) {
+        if (   args.length === 1
+            && typeof args[0] === "object"
+            && args[0] instanceof Array   ) {
+            args[0].forEach((key) => {
                 delete this.A[key]
             })
         }
-        else if (arguments.length === 1)
-            delete this.A[arguments[0]]
+        else if (args.length === 1)
+            delete this.A[args[0]]
         else
-            throw new Error("unset: invalid arguments")
+            throw new Error("unset: invalid number of arguments")
         return this
     }
 
@@ -107,7 +110,7 @@ export default class ASTYBase {
         if (arguments.length !== 1)
             throw new Error("get: invalid number of arguments")
         if (typeof key !== "string")
-            throw new Error("get: invalid argument")
+            throw new Error("get: invalid key argument")
         return this.A[key]
     }
 
@@ -116,48 +119,74 @@ export default class ASTYBase {
         return Object.keys(this.A)
     }
 
+    /*  return current sibling position  */
+    nth () {
+        if (this.P === null)
+            return 1
+        let nth = this.P.C.indexOf(this)
+        if (nth < 0)
+            throw new Error("nth: internal error -- node not in childs of its parent")
+        return nth
+    }
+
+    /*  insert child AST node(s)  */
+    ins (pos, ...args) {
+        if (args.length === 0)
+            throw new Error("ins: invalid number of arguments")
+        if (pos < 0)
+            pos = (this.C.length + 1) - pos
+        if (!(0 < pos && pos < this.C.length))
+            throw new Error("ins: invalid position")
+        let _ins = (node) => {
+            if (!this.ctx.isA(node))
+                throw new Error(`ins: invalid AST node argument: ${ JSON.stringify(node) }`)
+            this.C.splice(pos++, 0, node)
+            node.P = this
+        }
+        args.forEach((arg) => {
+            if (typeof arg === "object" && arg instanceof Array)
+                arg.forEach((arg) => { _ins(arg) })
+            else if (arg !== null)
+                _ins(arg)
+        })
+    }
+
     /*  add child AST node(s)  */
-    add () {
-        if (arguments.length === 0)
-            throw new Error("add: missing argument(s)")
-        let _add = (node, child) => {
-            if (!((typeof child   === "object") &&
-                  (typeof child.T === "string") &&
-                  (typeof child.L === "object") &&
-                  (typeof child.A === "object") &&
-                  (typeof child.P === "object") &&
-                  (typeof child.C === "object" && child.C instanceof Array)))
-                throw new Error(`add: invalid AST node: ${ JSON.stringify(child) }`)
-            node.C.push(child)
-            child.P = node
+    add (...args) {
+        if (args.length === 0)
+            throw new Error("add: invalid number of arguments")
+        let _add = (node) => {
+            if (!this.ctx.isA(node))
+                throw new Error(`add: invalid AST node argument: ${ JSON.stringify(node) }`)
+            this.C.push(node)
+            node.P = this
         }
-        if (arguments !== null) {
-            Array.prototype.slice.call(arguments, 0).forEach((arg) => {
-                if (typeof arg === "object" && arg instanceof Array)
-                    arg.forEach((child) => { _add(this, child) })
-                else if (arg !== null)
-                    _add(this, arg)
-            })
-        }
-        return this
+        args.forEach((arg) => {
+            if (typeof arg === "object" && arg instanceof Array)
+                arg.forEach((arg) => { _add(arg) })
+            else if (arg !== null)
+                _add(arg)
+        })
     }
 
     /*  delete child AST node(s)  */
-    del () {
-        if (arguments.length === 0)
-            throw new Error("del: invalid argument")
-        Array.prototype.slice.call(arguments, 0).forEach((arg) => {
+    del (...args) {
+        if (args.length === 0)
+            throw new Error("del: invalid number of argument")
+        args.forEach((node) => {
+            if (!this.ctx.isA(node))
+                throw new Error(`del: invalid AST node argument: ${ JSON.stringify(node) }`)
             let found = false
             for (let j = 0; j < this.C.length; j++) {
-                if (this.C[j] === arg) {
+                if (this.C[j] === node) {
                     this.C.splice(j, 1)
-                    arg.P = null
+                    node.P = null
                     found = true
                     break
                 }
             }
             if (!found)
-                throw new Error("del: child not found")
+                throw new Error("del: AST node not found in childs")
         })
         return this
     }

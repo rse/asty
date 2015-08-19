@@ -56,7 +56,7 @@ export default class ASTYCtx {
         return this
     }
     create (type) {
-        return (new this.ASTYNode()).init(type)
+        return (new this.ASTYNode()).init(this, type)
     }
     isA (node) {
         return (
