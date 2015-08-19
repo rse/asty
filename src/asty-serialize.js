@@ -53,7 +53,7 @@ export default class ASTYSerialize {
             return clone
         }
         if (!asty.isA(node))
-            throw new Error("failed to serialize: not an ASTy node")
+            throw new Error("serialize: not an ASTy node")
         return JSON.stringify({ ASTy: serializeNode(node) })
     }
 
@@ -84,7 +84,7 @@ export default class ASTYSerialize {
         }
         let obj = JSON.parse(json)
         if (typeof obj !== "object" || typeof obj.ASTy !== "object")
-            throw new Error("failed to unserialize: not an ASTy JSON export")
+            throw new Error("unserialize: not an ASTy JSON export")
         return unserializeNode(obj.ASTy)
     }
 }
