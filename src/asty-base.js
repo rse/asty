@@ -149,6 +149,7 @@ export default class ASTYBase {
             else if (arg !== null)
                 _ins(arg)
         })
+        return this
     }
 
     /*  add child AST node(s)  */
@@ -167,6 +168,7 @@ export default class ASTYBase {
             else if (arg !== null)
                 _add(arg)
         })
+        return this
     }
 
     /*  delete child AST node(s)  */
