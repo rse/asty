@@ -24,13 +24,9 @@
 
 export default class ASTYMerge {
     /*  merge attributes and childs of an AST node  */
-    merge (node, takePos, attrMap) {
-        if (typeof node !== "object")
+    merge (node, takePos = false, attrMap = {}) {
+        if (!this.ctx.isA(node))
             throw new Error("merge: invalid AST node argument")
-        if (typeof takePos === "undefined")
-            takePos = false
-        if (typeof attrMap === "undefined")
-            attrMap = {}
         if (takePos) {
             let pos = node.pos()
             this.pos(pos.L, pos.C, pos.O)
