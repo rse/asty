@@ -102,10 +102,19 @@ a notation somewhat resembling TypeScript type definitions):
 - `ASTYNode#attrs(): String[]:<br/>
   Get names of all node attributes.
 
+- `ASTYNode#nth(): Number:<br/>
+  Get position among sibling nodes in parent's child node list.
+  The positions start at 0.
+
+- `ASTYNode#ins(pos: Number, childs: ASTYNode[]): ASTYNode`:<br/>
+  Add one or more childs to a node, at a fixed position `pos`. The array `childs`
+  can either contain ASTYNode objects or even arrays of ASTYNode objects.
+  If `pos` is negative it counts from the end of child list,
+  with `-1` the position after the last existing child.
+
 - `ASTYNode#add(childs: ASTYNode[]): ASTYNode`:<br/>
-  Add one or more childs to a node. The array `childs`
-  can either contain ASTYNode objects or even arrays
-  of ASTYNode objects.
+  Add one or more childs to a node, at the end of the child list. The array `childs`
+  can either contain ASTYNode objects or even arrays of ASTYNode objects.
 
 - `ASTYNode#del(childs: ASTYNode[]): ASTYNode`:<br/>
   Delete one or more childs from a node.
