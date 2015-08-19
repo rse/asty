@@ -24,9 +24,7 @@
 
 export default class ASTYWalk {
     /*  walk the AST recursively  */
-    walk (cb, when) {
-        if (typeof when === "undefined")
-            when = "downward"
+    walk (cb, when = "downward") {
         let _walk = (node, depth, parent) => {
             if (when === "downward" || when === "both")
                 cb.call(null, node, depth, parent, "downward")
