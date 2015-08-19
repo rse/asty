@@ -135,7 +135,7 @@ export default class ASTYBase {
             throw new Error("ins: invalid number of arguments")
         if (pos < 0)
             pos = (this.C.length + 1) - pos
-        if (!(0 < pos && pos < this.C.length))
+        if (!(0 <= pos && pos <= this.C.length))
             throw new Error("ins: invalid position")
         let _ins = (node) => {
             if (!this.ctx.isA(node))
