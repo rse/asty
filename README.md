@@ -85,7 +85,13 @@ a notation somewhat resembling TypeScript type definitions):
   Set or get the position for the node.
 
 - `ASTYNode#set(name: String, value: Object): ASTYNode`:<br/>
-  Set a single attribute `name` to `value`.
+  `ASTYNode#set({ [String]: Object }): ASTYNode`:<br/>
+  Set a single attribute `name` to `value` or set multiple
+  attributes to their corresponding value.
+
+- `ASTYNode#unset(name: String): ASTYNode`:<br/>
+  `ASTYNode#unset(names: String[]): ASTYNode`:<br/>
+  Unset a single attribute `name` or unset multiple attributes.
 
 - `ASTYNode#set({ [name: String]: [value: Object] }): ASTYNode`:<br/>
   Set multiple attributes, each consisting of name and value pairs.

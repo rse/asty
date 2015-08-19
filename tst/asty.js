@@ -75,6 +75,13 @@ describe("ASTy Library", function () {
     it("node serialize/unserialize functionality", function () {
         var asty = new ASTy()
         var node1 = asty.create("1")
+        node1.set("foo", "bar")
+        expect(node1.get("foo")).to.be.equal("bar")
+        node1.unset("foo")
+        expect(node1.get("foo")).to.be.equal(undefined)
+        node1.set("foo", "bar")
+        node1.unset([ "foo" ])
+        expect(node1.get("foo")).to.be.equal(undefined)
         node1.set("foo", { bar: 42, quux: "7" })
         var node11 = asty.create("1.1")
         var node12 = asty.create("1.2")

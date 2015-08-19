@@ -88,6 +88,20 @@ export default class ASTYBase {
         return this
     }
 
+    /*  unset AST node attributes  */
+    unset () {
+        if (arguments.length === 1 && typeof arguments[0] === "object" && arguments[0] instanceof Array) {
+            arguments[0].forEach((key) => {
+                delete this.A[key]
+            })
+        }
+        else if (arguments.length === 1)
+            delete this.A[arguments[0]]
+        else
+            throw new Error("unset: invalid arguments")
+        return this
+    }
+
     /*  get AST node attributes  */
     get (key) {
         if (arguments.length !== 1)
