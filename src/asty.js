@@ -33,7 +33,10 @@ export default class ASTYCtx {
     constructor () {
         this.ASTYNode = () => {}
         let mixins = [
-            [ ASTYBase,  "init", "type", "pos", "set", "unset", "get", "attrs", "add", "del", "childs", "parent" ],
+            [ ASTYBase,  "init", "type", "pos",
+                         "set", "unset", "get", "attrs",
+                         "nth", "ins", "add", "del",
+                         "childs", "parent" ],
             [ ASTYMerge, "merge" ],
             [ ASTYWalk,  "walk" ],
             [ ASTYDump,  "dump" ]
