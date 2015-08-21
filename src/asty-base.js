@@ -202,5 +202,10 @@ export default class ASTYBase {
     parent () {
         return this.P
     }
+
+    /*  serialize AST node recursively  */
+    serialize () {
+        return this.ctx.serialize(this.ctx, this)
+    }
 }
 

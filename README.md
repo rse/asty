@@ -144,6 +144,10 @@ a notation somewhat resembling TypeScript type definitions):
   dumped. If `maxDepth` is `1` the current node and all its direct child
   nodes are dumped.
 
+- `ASTYNode#serialize(): String`:<br/>
+  Recursively serializes the AST node to JSON.
+  Use this for exporting.
+
 Implementation Notice
 ---------------------
 
