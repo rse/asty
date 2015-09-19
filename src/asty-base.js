@@ -139,7 +139,7 @@ export default class ASTYBase {
             throw new Error("ins: invalid position")
         let _ins = (node) => {
             if (!this.ctx.isA(node))
-                throw new Error(`ins: invalid AST node argument: ${ JSON.stringify(node) }`)
+                throw new Error("ins: invalid AST node argument")
             this.C.splice(pos++, 0, node)
             node.P = this
         }
@@ -158,7 +158,7 @@ export default class ASTYBase {
             throw new Error("add: invalid number of arguments")
         let _add = (node) => {
             if (!this.ctx.isA(node))
-                throw new Error(`add: invalid AST node argument: ${ JSON.stringify(node) }`)
+                throw new Error("add: invalid AST node argument")
             this.C.push(node)
             node.P = this
         }
@@ -177,7 +177,7 @@ export default class ASTYBase {
             throw new Error("del: invalid number of argument")
         args.forEach((node) => {
             if (!this.ctx.isA(node))
-                throw new Error(`del: invalid AST node argument: ${ JSON.stringify(node) }`)
+                throw new Error("del: invalid AST node argument")
             let found = false
             for (let j = 0; j < this.C.length; j++) {
                 if (this.C[j] === node) {
