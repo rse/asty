@@ -29,7 +29,7 @@ import ASTYDump      from "./asty-dump.js"
 import ASTYSerialize from "./asty-serialize.js"
 import ASTYVersion   from "./asty-version.js"
 
-export default class ASTYCtx {
+class ASTYCtx {
     constructor () {
         this.ASTYNode = () => {}
         let mixins = [
@@ -76,4 +76,8 @@ export default class ASTYCtx {
         return ASTYSerialize.unserialize(this, json)
     }
 }
+
+/*  export the traditional way for interoperability reasons
+    (as Babel would export an object with a 'default' field)  */
+module.exports = ASTYCtx
 

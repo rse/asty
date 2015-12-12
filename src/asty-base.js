@@ -123,10 +123,10 @@ export default class ASTYBase {
     nth () {
         if (this.P === null)
             return 1
-        let nth = this.P.C.indexOf(this)
-        if (nth < 0)
+        let idx = this.P.C.indexOf(this)
+        if (idx < 0)
             throw new Error("nth: internal error -- node not in childs of its parent")
-        return nth
+        return idx
     }
 
     /*  insert child AST node(s)  */
