@@ -46,6 +46,10 @@ export default class ASTYDump {
                     out += key + ": "
                     let value = node.A[key]
                     switch (typeof value) {
+                        case "boolean":
+                        case "number":
+                            out += value.toString()
+                            break
                         case "string":
                             let hex = (ch) => ch.charCodeAt(0).toString(16).toUpperCase()
                             out += "\"" +
