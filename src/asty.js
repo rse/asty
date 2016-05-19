@@ -36,7 +36,7 @@ class ASTYCtx {
             [ ASTYBase,  "init", "type", "pos",
                          "set", "unset", "get", "attrs",
                          "nth", "ins", "add", "del",
-                         "childs", "parent" ],
+                         "childs", "parent", "serialize" ],
             [ ASTYMerge, "merge" ],
             [ ASTYWalk,  "walk" ],
             [ ASTYDump,  "dump" ]
