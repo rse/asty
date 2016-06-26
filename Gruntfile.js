@@ -50,8 +50,7 @@ module.exports = function (grunt) {
         jscs: {
             "asty": {
                 options: {
-                    config: "jscs.json",
-                    esnext: true
+                    config: "jscs.json"
                 },
                 files: {
                     src: [ "src/**/*.js" ]
