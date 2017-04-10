@@ -1,6 +1,6 @@
 ##
 ##  ASTy -- Abstract Syntax Tree (AST) Data Structure
-##  Copyright (c) 2014-2016 Ralf S. Engelschall <rse@engelschall.com>
+##  Copyright (c) 2014-2017 Ralf S. Engelschall <rse@engelschall.com>
 ##
 ##  Permission is hereby granted, free of charge, to any person obtaining
 ##  a copy of this software and associated documentation files (the
@@ -24,6 +24,6 @@
 
 major: 1
 minor: 4
-micro: 8
-date:  20161120
+micro: 9
+date:  20170410
 
