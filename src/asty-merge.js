@@ -25,6 +25,8 @@
 export default class ASTYMerge {
     /*  merge attributes and childs of an AST node  */
     merge (node, takePos = false, attrMap = {}) {
+        if (node === null)
+            return this
         if (!this.ctx.isA(node))
             throw new Error("merge: invalid AST node argument")
         if (takePos) {
