@@ -99,10 +99,10 @@ a notation somewhat resembling TypeScript type definitions):
 - `ASTYNode#get(name: String): Object`:<br/>
   Get value of attribute `name`.
 
-- `ASTYNode#attrs(): String[]:<br/>
+- `ASTYNode#attrs(): String[]`:<br/>
   Get names of all node attributes.
 
-- `ASTYNode#nth(): Number:<br/>
+- `ASTYNode#nth(): Number`:<br/>
   Get position among sibling nodes in parent's child node list.
   The positions start at 0.
 
