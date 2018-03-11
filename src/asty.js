@@ -58,8 +58,8 @@ class ASTYCtx {
                 this.ASTYNode.prototype[method] = mixin[method]
         return this
     }
-    create (type) {
-        return (new this.ASTYNode()).init(this, type)
+    create (type, attrs, childs) {
+        return (new this.ASTYNode()).init(this, type, attrs, childs)
     }
     isA (node) {
         return (
