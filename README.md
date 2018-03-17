@@ -119,8 +119,13 @@ a notation somewhat resembling TypeScript type definitions):
 - `ASTYNode#del(childs: ASTYNode[]): ASTYNode`:<br/>
   Delete one or more childs from a node.
 
-- `ASTYNode#childs(): ASTYNode[]`:<br/>
-  Get a nodes list of childs.
+- `ASTYNode#childs(begin?: Number, end?: Number): ASTYNode[]`:<br/>
+  Get a nodes list of all or some childs. The `begin` and `end` parameters
+  are passed-through to `Array::slice`. If the range from `begin` to `end` is
+  out of range, an empty array is returned.
+
+- `ASTYNode#child(pos: Number): ASTYNode`:<br/>
+  Get a particular child node. If `pos` is out of range, `null` is returned.
 
 - `ASTYNode#parent(): ASTYNode`:<br/>
   Get parent node.

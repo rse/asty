@@ -174,7 +174,7 @@ export default class ASTYBase {
     /*  delete child AST node(s)  */
     del (...args) {
         if (args.length === 0)
-            throw new Error("del: invalid number of argument")
+            throw new Error("del: invalid number of arguments")
         args.forEach((node) => {
             if (!this.ctx.isA(node))
                 throw new Error("del: invalid AST node argument")
@@ -193,9 +193,25 @@ export default class ASTYBase {
         return this
     }
 
-    /*  get child AST nodes  */
-    childs () {
-        return this.C
+    /*  get all or some child AST nodes  */
+    childs (...args) {
+        if (args.length > 2)
+            throw new Error("childs: invalid number of arguments")
+        if (args.length === 2 && typeof args[0] === "number" && typeof args[1] === "number")
+            return this.C.slice(args[0], args[1])
+        else if (args.length === 1 && typeof args[0] === "number")
+            return this.C.slice(args[0])
+        else if (args.length === 0)
+            return this.C
+        else
+            throw new Error("childs: invalid type of arguments")
+    }
+
+    /*  get one child AST node  */
+    child (pos) {
+        if (typeof pos !== "number")
+            throw new Error("child: invalid argument")
+        return (pos < this.C.length ? this.C[pos] : null)
     }
 
     /*  get parent AST node  */
