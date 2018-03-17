@@ -142,15 +142,17 @@ a notation somewhat resembling TypeScript type definitions):
   i.e., after(!) all child nodes were visited, and with `when` set
   to `upward`.
 
-- `ASTYNode#dump(maxDepth?: Number, colorize?: (type: String, text: String) => String): String`:<br/>
+- `ASTYNode#dump(maxDepth?: Number, colorize?: (type: String, text: String) => String, unicode?: Boolean): String`:<br/>
   Returns a textual dump of the AST starting at the current node. By
   default `maxDepth` is `Infinity` and this way the whole AST below the
   current node is dumped. If `maxDepth` is `0` only the current node is
   dumped. If `maxDepth` is `1` the current node and all its direct child
   nodes are dumped. The parameter `colorize` is an optional callback function,
   intended to colorize the output `text` fragments according to their `type`.
-  The following `type` strings are supported: `type`, `parenthesis`, `comma`,
-  `key`, `colon`, `value`, `position`, `bracket`, `line`, `slash`, `column`.
+  The following `type` strings are supported: `tree`, `type`, `parenthesis`, `comma`,
+  `key`, `colon`, `value`, `position`, `bracket`, `line`, `slash`, and `column`.
+  If `unicode` is set to `false`, ASCII substitution characters are used
+  for the tree structure.
 
 - `ASTYNode#serialize(): String`:<br/>
   Recursively serializes the AST node to JSON.
