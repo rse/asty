@@ -24,7 +24,7 @@
 
 export default class ASTYDump {
     /*  dump the AST recursively  */
-    dump (maxDepth) {
+    dump (maxDepth, colorize = (type, txt) => txt) {
         if (maxDepth === undefined)
             maxDepth = Infinity
         let out = ""
@@ -33,26 +33,26 @@ export default class ASTYDump {
                 return
             for (let i = 0; i < depth; i++)
                 out += "    "
-            out += node.T + " "
+            out += colorize("type", node.T) + " "
             let keys = Object.keys(node.A)
             if (keys.length > 0) {
-                out += "("
+                out += colorize("parenthesis", "(")
                 let first = true
                 keys.forEach((key) => {
                     if (!first)
-                        out += ", "
+                        out += colorize("comma", ",") + " "
                     else
                         first = false
-                    out += key + ": "
+                    out += colorize("key", key) + colorize("colon", ":") + " "
                     let value = node.A[key]
                     switch (typeof value) {
                         case "boolean":
                         case "number":
-                            out += value.toString()
+                            out += colorize("value", value.toString())
                             break
                         case "string":
                             let hex = (ch) => ch.charCodeAt(0).toString(16).toUpperCase()
-                            out += "\"" +
+                            out += colorize("value", "\"" +
                                 value.replace(/\\/g, "\\\\")
                                     .replace(/"/g, "\\\"")
                                     .replace(/\x08/g, "\\b")
@@ -64,22 +64,28 @@ export default class ASTYDump {
                                     .replace(/[\x10-\x1F\x80-\xFF]/g,    (ch) => "\\x"  + hex(ch))
                                     .replace(/[\u0100-\u0FFF]/g,         (ch) => "\\u0" + hex(ch))
                                     .replace(/[\u1000-\uFFFF]/g,         (ch) => "\\u"  + hex(ch)) +
-                                "\""
+                                "\"")
                             break
                         case "object":
                             if (value instanceof RegExp)
-                                out += value.source
+                                out += colorize("value", "/" + value.source + "/")
                             else
-                                out += JSON.stringify(value)
+                                out += colorize("value", JSON.stringify(value))
                             break
                         default:
-                            out += JSON.stringify(value)
+                            out += colorize("value", JSON.stringify(value))
                             break
                     }
                 })
-                out += ") "
+                out += colorize("parenthesis", ")") + " "
             }
-            out += "[" + node.L.L + "/" + node.L.C + "]\n"
+            out += colorize("position",
+                colorize("bracket", "[") +
+                colorize("line", node.L.L) +
+                colorize("slash", "/") +
+                colorize("column", node.L.C) +
+                colorize("bracket", "]")
+            ) + "\n"
         }, "downward")
         return out
     }
