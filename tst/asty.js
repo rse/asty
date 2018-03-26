@@ -43,6 +43,8 @@ describe("ASTy Library", function () {
         expect(node.type()).to.be.equal("foo")
         expect(node).to.respondTo("type")
         expect(node).to.respondTo("dump")
+        var node2 = node.create("foo")
+        expect(asty.isA(node2)).to.be.true
     })
     it("node tree structure", function () {
         var asty = new ASTy()

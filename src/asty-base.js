@@ -44,6 +44,11 @@ export default class ASTYBase {
         return this
     }
 
+    /*  create new AST node  */
+    create (T, A, C) {
+        return this.ctx.create(T, A, C)
+    }
+
     /*  check the type of an AST node  */
     type (T) {
         if (arguments.length === 0)

@@ -72,6 +72,9 @@ a notation somewhat resembling TypeScript type definitions):
 
 ### ASTy Node (ASTYNode)
 
+- `ASTYNode#create(type: String, attrs?: {[name: String]: [value: Object]}, childs?: ASTY[]): ASTYNode`:<br/>
+  Create a new ASTYNode instance of `type` and optionally already set attributes and add child nodes.
+
 - `ASTYNode#merge(node: Node, takePos?: Boolean, attrMap?: {[from: String]: [to: (String|null)})): ASTYNode`:<br/>
   Merge attributes, childs and optionally the position of a node.
   The attributes can be renamed or skipped (if mapped onto `null`).
