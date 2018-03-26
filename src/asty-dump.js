@@ -33,6 +33,7 @@ export default class ASTYDump {
     /*  dump the AST recursively  */
     dump (maxDepth = Infinity, colorize = (type, txt) => txt, unicode = true) {
         let out = ""
+        let self = this
         this.walk((node, depth /*, parent, when */) => {
             /*  short-circuit processing at a certain depth  */
             if (depth > maxDepth)
@@ -59,7 +60,7 @@ export default class ASTYDump {
                     prefix = `${unicode ? tree.mid.unicode : tree.mid.ascii}${prefix}`
                 else
                     prefix = `${unicode ? tree.last.unicode : tree.last.ascii}${prefix}`
-                for (let parent = node.P; parent !== null; parent = parent.P) {
+                for (let parent = node.P; parent !== null && parent !== self; parent = parent.P) {
                     if (parent.P !== null) {
                         let { nth, max } = nodeIndex(parent)
                         if (nth < max)
