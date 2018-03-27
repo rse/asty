@@ -13,16 +13,8 @@ Abstract Syntax Tree (AST) Data Structure
 Installation
 ------------
 
-#### Node environments (with NPM package manager):
-
 ```shell
 $ npm install asty
-```
-
-#### Browser environments (with Bower package manager):
-
-```shell
-$ bower install asty
 ```
 
 About
