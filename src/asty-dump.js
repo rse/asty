@@ -92,8 +92,9 @@ export default class ASTYDump {
                         case "number":
                             out += colorize("value", value.toString())
                             break
-                        case "string":
+                        case "string": {
                             let hex = (ch) => ch.charCodeAt(0).toString(16).toUpperCase()
+                            /* eslint no-control-regex: off */
                             out += colorize("value", "\"" +
                                 value.replace(/\\/g, "\\\\")
                                     .replace(/"/g, "\\\"")
@@ -108,6 +109,7 @@ export default class ASTYDump {
                                     .replace(/[\u1000-\uFFFF]/g,         (ch) => "\\u"  + hex(ch)) +
                                 "\"")
                             break
+                        }
                         case "object":
                             if (value instanceof RegExp)
                                 out += colorize("value", "/" + value.source + "/")

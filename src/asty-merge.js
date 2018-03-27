@@ -34,11 +34,8 @@ export default class ASTYMerge {
             this.pos(pos.L, pos.C, pos.O)
         }
         node.attrs().forEach((attrSource) => {
-            let attrTarget = (
-                  typeof attrMap[attrSource] !== "undefined"
-                ? attrMap[attrSource]
-                : attrSource
-            )
+            let attrTarget = (typeof attrMap[attrSource] !== "undefined" ?
+                attrMap[attrSource] : attrSource)
             if (attrTarget !== null)
                 this.set(attrTarget, node.get(attrSource))
         })

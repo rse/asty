@@ -33,11 +33,12 @@ class ASTYCtx {
     constructor () {
         this.ASTYNode = () => {}
         let mixins = [
-            [ ASTYBase,  "init", "create", "type", "pos",
-                         "set", "unset", "get", "attrs",
-                         "nth", "ins", "add", "del",
-                         "childs", "child", "parent",
-                         "serialize" ],
+            [ ASTYBase,
+                "init", "create", "type", "pos",
+                "set", "unset", "get", "attrs",
+                "nth", "ins", "add", "del",
+                "childs", "child", "parent",
+                "serialize" ],
             [ ASTYMerge, "merge" ],
             [ ASTYWalk,  "walk" ],
             [ ASTYDump,  "dump" ]
@@ -63,12 +64,10 @@ class ASTYCtx {
         return (new this.ASTYNode()).init(this, type, attrs, childs)
     }
     isA (node) {
-        return (
-               typeof node === "object"
+        return (typeof node === "object"
             && node instanceof this.ASTYNode
             && typeof node.ASTy === "boolean"
-            && node.ASTy === true
-        )
+            && node.ASTy === true)
     }
     serialize (node) {
         return ASTYSerialize.serialize(this, node)

@@ -27,12 +27,12 @@ export default class ASTYWalk {
     walk (cb, when = "downward") {
         let _walk = (node, depth, parent) => {
             if (when === "downward" || when === "both")
-                cb.call(null, node, depth, parent, "downward")
+                cb(node, depth, parent, "downward")
             node.C.forEach((child) => {
                 _walk(child, depth + 1, node)
             })
             if (when === "upward" || when === "both")
-                cb.call(null, node, depth, parent, "upward")
+                cb(node, depth, parent, "upward")
         }
         _walk(this, 0, null)
         return this
