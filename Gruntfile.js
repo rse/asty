@@ -49,17 +49,25 @@ module.exports = function (grunt) {
                             { from: /\$minor/g, to: "<%= version.minor %>" },
                             { from: /\$micro/g, to: "<%= version.micro %>" },
                             { from: /\$date/g,  to: "<%= version.date  %>" }
-                        ]}],
-                        [ "babelify", { presets: [ "es2015" ] } ]
+                        ] } ],
+                        [ "babelify", {
+                            presets: [
+                                [ "env", {
+                                    "targets": {
+                                        "browser": [ "last 8 versions", "> 1%", "ie 9" ]
+                                    }
+                                } ]
+                            ]
+                        } ],
+                        [ "uglifyify", { sourceMap: false, global: true } ],
                     ],
                     plugin: [
-                        [ "minifyify", { map: "asty.browser.map", output: "lib/asty.browser.map" } ],
                         [ "browserify-derequire" ],
                         [ "browserify-header" ]
                     ],
                     browserifyOptions: {
                         standalone: "ASTY",
-                        debug: true
+                        debug: false
                     }
                 }
             },
@@ -74,8 +82,16 @@ module.exports = function (grunt) {
                             { from: /\$minor/g, to: "<%= version.minor %>" },
                             { from: /\$micro/g, to: "<%= version.micro %>" },
                             { from: /\$date/g,  to: "<%= version.date  %>" }
-                        ]}],
-                        [ "babelify", { presets: [ "es2015" ] } ]
+                        ] } ],
+                        [ "babelify", {
+                            presets: [
+                                [ "env", {
+                                    "targets": {
+                                        "node": [ "4.0.0" ]
+                                    }
+                                } ]
+                            ]
+                        } ]
                     ],
                     plugin: [
                         [ "browserify-derequire" ],
