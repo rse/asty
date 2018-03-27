@@ -156,15 +156,13 @@ a notation somewhat resembling TypeScript type definitions):
 Implementation Notice
 ---------------------
 
-Although ASTy is written in ECMAScript 6, it is transpiled to ECMAScript
-5 and this way runs in really all(!) current (as of 2015) JavaScript
-environments, of course.
+Although ASTy is written in ECMAScript 2018, it is transpiled to older
+environments and this way runs in really all current (as of 2018)
+JavaScript environments, of course.
 
-Additionally, there are two transpilation results: first, there is
-`asty.browser.js` (plus `asty.browser.map`) for Browser environments.
-This is a size-compressed variant but still with source-map for
-debugging. Second, there is `asty.node.js` for Node.js/IO.js
-environments. This is a variant without compression and no source-maps.
+Additionally, there are two transpilation results: first, there is a
+compressed `asty.browser.js` for Browser environments. Second, there is
+an uncompressed `asty.node.js` for Node.js environments.
 
 License
 -------
