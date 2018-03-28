@@ -84,11 +84,18 @@ export default class ASTYBase {
         if (   args.length === 1
             && typeof args[0] === "object") {
             Object.keys(args[0]).forEach((key) => {
-                this.A[key] = args[0][key]
+                if (args[0][key] !== undefined)
+                    this.A[key] = args[0][key]
+                else
+                    delete this.A[key]
             })
         }
-        else if (args.length === 2)
-            this.A[args[0]] = args[1]
+        else if (args.length === 2) {
+            if (args[1] !== undefined)
+                this.A[args[0]] = args[1]
+            else
+                delete this.A[args[0]]
+        }
         else
             throw new Error("set: invalid number of arguments")
         return this
