@@ -31,7 +31,7 @@ export default class ASTYMerge {
             throw new Error("merge: invalid AST node argument")
         if (takePos) {
             let pos = node.pos()
-            this.pos(pos.L, pos.C, pos.O)
+            this.pos(pos.line, pos.column, pos.offset)
         }
         node.attrs().forEach((attrSource) => {
             let attrTarget = (typeof attrMap[attrSource] !== "undefined" ?
