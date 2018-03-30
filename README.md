@@ -26,7 +26,7 @@ abstraction of an arbitrary formal language. It is usually used
 in combination with a parser generator like [PEG.js](http://pegjs.org/)
 (and then especially with its utility class [PEGUtil](http://github.com/rse/pegjs-util))
 to carry the results of the parsing step and to provide the vehicle
-for further processing of those results.
+for further processing those results.
 
 Usage
 -----
