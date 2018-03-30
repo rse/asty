@@ -40,8 +40,12 @@ export default class ASTYMerge {
                 this.set(attrTarget, node.get(attrSource))
         })
         node.childs().forEach((child) => {
+            node.del(child)
             this.add(child)
         })
+        let parent = node.parent()
+        if (parent !== null)
+            parent.del(node)
         return this
     }
 }
