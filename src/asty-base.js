@@ -233,7 +233,7 @@ export default class ASTYBase {
 
     /*  serialize AST node recursively  */
     serialize () {
-        return this.ctx.serialize(this.ctx, this)
+        return this.ctx.serialize(this)
     }
 }
 
