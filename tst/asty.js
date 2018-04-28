@@ -92,8 +92,10 @@ describe("ASTy Library", function () {
         node1.add(node11, node12)
         node12.add(node121, node122)
         var dump1 = node1.dump()
-        var dump2 = asty.unserialize(asty.serialize(node1)).dump()
+        var dump2 = ASTy.unserialize(ASTy.serialize(node1)).dump()
         expect(dump1).to.be.equal(dump2)
+        var dump3 = ASTy.unserialize(node1.serialize()).dump()
+        expect(dump1).to.be.equal(dump3)
     })
 })
 

@@ -69,11 +69,14 @@ class ASTYCtx {
             && typeof node.ASTy === "boolean"
             && node.ASTy === true)
     }
-    serialize (node) {
-        return ASTYSerialize.serialize(this, node)
+    __serialize (node) {
+        return ASTYCtx.serialize(node)
     }
-    unserialize (json) {
-        return ASTYSerialize.unserialize(this, json)
+    static serialize (node) {
+        return ASTYSerialize.serialize(node.ctx, node)
+    }
+    static unserialize (json) {
+        return ASTYSerialize.unserialize(new ASTYCtx(), json)
     }
 }
 

@@ -56,10 +56,10 @@ a notation somewhat resembling TypeScript type definitions):
 - `ASTYCtx#isA(object: Object): Boolean`:<br/>
   Check whether `object` is an ASTYNode instance.
 
-- `ASTYCtx#serialize(node: ASTYNode): String`:<br/>
+- `static ASTYCtx::serialize(node: ASTYNode): String`:<br/>
   Serializes (formats) ASTy nodes to JSON string. Use this for exporting an AST.
 
-- `ASTYCtx#unserialize(json: String): ASTYNode`:<br/>
+- `static ASTYCtx::unserialize(json: String): ASTYNode`:<br/>
   Unserializes (parses) JSON string to ASTy nodes. Use this for importing an AST.
 
 ### ASTy Node (ASTYNode)
