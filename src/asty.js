@@ -76,7 +76,8 @@ class ASTYCtx {
         return ASTYSerialize.serialize(node.ctx, node)
     }
     static unserialize (json) {
-        return ASTYSerialize.unserialize(new ASTYCtx(), json)
+        let Ctx = this
+        return ASTYSerialize.unserialize(new Ctx(), json)
     }
 }
 
