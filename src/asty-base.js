@@ -118,12 +118,22 @@ export default class ASTYBase {
     }
 
     /*  get AST node attributes  */
-    get (key) {
-        if (arguments.length !== 1)
+    get (...args) {
+        if (args.length !== 1)
             throw new Error("get: invalid number of arguments")
-        if (typeof key !== "string")
-            throw new Error("get: invalid key argument")
-        return this.A[key]
+        if (typeof args[0] === "object" && args[0] instanceof Array) {
+            return args[0].map((key) => {
+                if (typeof key !== "string")
+                    throw new Error("get: invalid key argument")
+                return this.A[key]
+            })
+        }
+        else {
+            let key = args[0]
+            if (typeof key !== "string")
+                throw new Error("get: invalid key argument")
+            return this.A[key]
+        }
     }
 
     /*  get names of all AST node attributes  */

@@ -92,7 +92,9 @@ a notation somewhat resembling TypeScript type definitions):
   Set multiple attributes, each consisting of name and value pairs.
 
 - `ASTYNode#get(name: String): Object`:<br/>
-  Get value of attribute `name`.
+  `ASTYNode#get(names: String[]): Object[]`:<br/>
+  Get value of a particular attribute `name`,
+  or get array of values corresponding to each name in `names`.
 
 - `ASTYNode#attrs(): String[]`:<br/>
   Get names of all node attributes.
