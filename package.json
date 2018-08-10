@@ -1,6 +1,6 @@
 {
     "name":        "asty",
-    "version":     "1.7.15",
+    "version":     "1.7.16",
     "description": "Abstract Syntax Tree (AST) Data Structure",
     "keywords":    [ "ast", "abstract", "syntax", "tree", "data", "structure" ],
     "browser":     "lib/asty.browser.js",
