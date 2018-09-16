@@ -40,7 +40,7 @@ declare namespace ASTY {
     merge(
       node: ASTYNode,
       takePos?: boolean,
-      attrMap?: Record<string, string | null>
+      attrMap?: Record<string, any>
     ): ASTYNode;
     walk(callback: WalkCallback, when?: WalkWhen): ASTYNode;
     dump(
