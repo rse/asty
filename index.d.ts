@@ -9,8 +9,16 @@ declare namespace ASTY {
     static unserialize(node: string): ASTYNode;
   }
 
-  export interface ASTYNode {
-    create(type: string, attrMap?: Record<string, any>, childs?: ASTYNode[]): ASTYNode;
+  export interface ASTYNode<T = string | symbol> {
+    T: T;
+    A: Record<string, any>;
+    C: ASTYNode[];
+
+    create(
+      type: T,
+      attrMap?: Record<string, any>,
+      childs?: ASTYNode[]
+    ): ASTYNode;
     type(): string;
     type(type: string): ASTYNode;
     pos(line: number, column: number, offset: number): ASTYNode;
@@ -35,7 +43,12 @@ declare namespace ASTY {
       attrMap?: Record<string, string | null>
     ): ASTYNode;
     walk(
-      callback: (node: ASTYNode, depth: number, parent: ASTYNode, when: string) => void,
+      callback: (
+        node: ASTYNode,
+        depth: number,
+        parent: ASTYNode,
+        when: string
+      ) => void,
       when?: string
     ): ASTYNode;
     dump(
