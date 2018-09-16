@@ -64,8 +64,9 @@ declare namespace ASTY {
     | "position"
     | "slash"
     | "string"
+    | "tree"
     | "type"
-    | "tree";
+    | "value";
 
   interface ASTYVersion {
     major: number;
