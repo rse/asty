@@ -42,21 +42,21 @@ declare namespace ASTY {
       takePos?: boolean,
       attrMap?: Record<string, string | null>
     ): ASTYNode;
-    walk(
-      callback: (
-        node: ASTYNode,
-        depth: number,
-        parent: ASTYNode,
-        when: string
-      ) => void,
-      when?: string
-    ): ASTYNode;
+    walk(callback: WalkCallback, when?: WalkWhen): ASTYNode;
     dump(
       maxDepth?: number,
       colorize?: (type: string, text: string) => string,
       unicode?: boolean
     ): string;
   }
+
+  type WalkCallback = (
+    node: ASTYNode,
+    depth: number,
+    parent: ASTYNode,
+    when: WalkWhen
+  ) => void;
+  type WalkWhen = "downward" | "upward" | "both";
 
   export interface ASTYVersion {
     major: number;
