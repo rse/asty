@@ -5,6 +5,7 @@
     "keywords":    [ "ast", "abstract", "syntax", "tree", "data", "structure" ],
     "browser":     "lib/asty.browser.js",
     "main":        "lib/asty.node.js",
+    "types":       "index.d.ts",
     "license":     "MIT",
     "repository": {
         "type": "git",
