@@ -1,16 +1,16 @@
 declare namespace ASTY {
-  class ASTYContext {
-    create: ASTYNode["create"];
-    isA(node: any): node is ASTYNode;
+  class Context {
+    create: Node["create"];
+    isA(node: any): node is Node;
 
-    version(): ASTYVersion;
-    extend(nodeMethods: Record<string, Function>): ASTYContext;
+    version(): Version;
+    extend(nodeMethods: Record<string, Function>): Context;
 
-    static serialize(node: ASTYNode): string;
-    static unserialize(node: string): ASTYNode;
+    static serialize(node: Node): string;
+    static unserialize(input: string): Node;
   }
 
-  interface ASTYNode {
+  interface Node {
     T: string | symbol;
     A: Record<string, any>;
     C: this[];
@@ -18,6 +18,7 @@ declare namespace ASTY {
     create(type: this["T"], attrMap?: this["A"], childs?: this[]): this;
     type(): this["T"];
     type(type: this["T"]): this;
+    pos(): Position;
     pos(line: number, column: number, offset: number): this;
     set(name: string, value?: any): this;
     set(attrMap: this["A"]): this;
@@ -26,9 +27,9 @@ declare namespace ASTY {
     get(names: string[]): any[];
     attrs(): string[];
     nth(): number;
-    ins(pos: number, childs: this[]): this;
-    add(childs: this[]): this;
-    del(childs: this[]): this;
+    ins(pos: number, ...childs: Array<this | this[]>): this;
+    add(...childs: Array<this | this[]>): this;
+    del(...childs: Array<this | this[]>): this;
     childs(begin?: number, end?: number): this;
     child(pos: number): this;
     parent(): this;
@@ -36,20 +37,17 @@ declare namespace ASTY {
 
     merge(node: this, takePos?: boolean, attrMap?: this["A"]): this;
     walk(callback: WalkCallback, when?: WalkWhen): this;
-    dump(
-      maxDepth?: number,
-      colorize?: (type: ColorizeType, text: string) => string,
-      unicode?: boolean
-    ): string;
+    dump(maxDepth?: number, colorize?: Colorize, unicode?: boolean): string;
   }
 
   type WalkCallback = (
-    node: ASTYNode,
+    node: Node,
     depth: number,
-    parent: ASTYNode,
+    parent: Node,
     when: WalkWhen
   ) => void;
   type WalkWhen = "both" | "downward" | "upward";
+  type Colorize = (type: ColorizeType, text: string) => string;
   type ColorizeType =
     | "boolean"
     | "bracket"
@@ -68,12 +66,18 @@ declare namespace ASTY {
     | "type"
     | "value";
 
-  interface ASTYVersion {
+  interface Version {
     major: number;
     minor: number;
     micro: number;
     date: number;
   }
+
+  interface Position {
+    line: number;
+    column: number;
+    offset: number;
+  }
 }
 
-export = ASTY.ASTYContext;
+export = ASTY.Context;
