@@ -31,7 +31,7 @@ import ASTYVersion   from "./asty-version.js"
 
 class ASTYCtx {
     constructor () {
-        this.ASTYNode = () => {}
+        this.ASTYNode = class ASTYNode {}
         let mixins = [
             [ ASTYBase,
                 "init", "create", "type", "pos",
