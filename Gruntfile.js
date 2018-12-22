@@ -52,9 +52,9 @@ module.exports = function (grunt) {
                         ] } ],
                         [ "babelify", {
                             presets: [
-                                [ "env", {
+                                [ "@babel/preset-env", {
                                     "targets": {
-                                        "browser": [ "last 8 versions", "> 1%", "ie 9" ]
+                                        "browsers": "last 8 versions, > 1%, ie 11"
                                     }
                                 } ]
                             ]
@@ -85,9 +85,9 @@ module.exports = function (grunt) {
                         ] } ],
                         [ "babelify", {
                             presets: [
-                                [ "env", {
+                                [ "@babel/preset-env", {
                                     "targets": {
-                                        "node": [ "4.0.0" ]
+                                        "node": "8.0.0"
                                     }
                                 } ]
                             ]
