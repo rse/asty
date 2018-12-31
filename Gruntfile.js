@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                                 } ]
                             ]
                         } ],
-                        [ "uglifyify", { sourceMap: false, global: true } ],
+                        [ "uglifyify", { sourceMap: false, global: true } ]
                     ],
                     plugin: [
                         [ "browserify-derequire" ],
