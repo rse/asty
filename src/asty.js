@@ -56,7 +56,7 @@ class ASTYCtx {
     }
     extend (mixin) {
         for (let method in mixin)
-            if (mixin.hasOwnProperty(method))
+            if (Object.prototype.hasOwnProperty.call(mixin, method))
                 this.ASTYNode.prototype[method] = mixin[method]
         return this
     }

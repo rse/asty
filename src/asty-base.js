@@ -36,7 +36,7 @@ export default class ASTYBase {
         this.P = null
         if (typeof A === "object") {
             for (let name in A)
-                if (A.hasOwnProperty(name))
+                if (Object.prototype.hasOwnProperty.call(A, name))
                     this.set(name, A[name])
         }
         if (typeof C === "object" && C instanceof Array)
