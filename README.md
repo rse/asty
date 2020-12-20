@@ -166,6 +166,15 @@ Additionally, there are two transpilation results: first, there is a
 compressed `asty.browser.js` for Browser environments. Second, there is
 an uncompressed `asty.node.js` for Node.js environments.
 
+Alternatives
+------------
+
+A few decent alternatives to ASTy exist:
+
+- [UniST](https://github.com/syntax-tree/unist) and [UniST Builder](https://github.com/syntax-tree/unist-builder)
+- [estree](https://github.com/estree/estree)
+- [AST-Types](https://www.npmjs.com/package/ast-types)
+
 License
 -------
 
