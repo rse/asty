@@ -77,6 +77,7 @@ export default class ASTYDump {
 
             /*  draw node attributes  */
             let keys = Object.keys(node.A)
+                .filter((key) => !key.match(/^__/))
             if (keys.length > 0) {
                 out += colorize("parenthesis", "(")
                 let first = true
