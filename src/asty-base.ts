@@ -282,7 +282,7 @@ export default class ASTYBase {
     child (pos: number): ASTYNodeT | null {
         if (typeof pos !== "number")
             throw new Error("child: invalid argument")
-        return (pos < this.C.length ? this.C[pos] : null)
+        return (pos >= 0 && pos < this.C.length ? this.C[pos] : null)
     }
 
     /*  get parent AST node  */
