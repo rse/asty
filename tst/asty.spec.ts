@@ -186,9 +186,11 @@ describe("ASTy Library", function () {
         const c0 = asty.create("c0")
         const c1 = asty.create("c1")
         root.add(c0, c1)
-        expect(root.nth()).to.be.equal(1)
+        expect(root.nth()).to.be.equal(0)
         expect(c0.nth()).to.be.equal(0)
         expect(c1.nth()).to.be.equal(1)
+        const orphan = asty.create("orphan")
+        expect(orphan.nth()).to.be.equal(0)
     })
     it("node add functionality", () => {
         const asty = new ASTy()

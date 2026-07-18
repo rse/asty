@@ -198,7 +198,7 @@ export default class ASTYBase {
     /*  return current sibling position  */
     nth (this: ASTYNodeT): number {
         if (this.P === null)
-            return 1
+            return 0
         const idx = this.P.C.indexOf(this)
         if (idx < 0)
             throw new Error("nth: internal error -- node not in childs of its parent")
