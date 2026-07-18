@@ -35,6 +35,15 @@ export default class ASTYMerge {
             return this
         if (!this.ctx.isA(node))
             throw new Error("merge: invalid AST node argument")
+
+        /*  reject self-merge and merging of an own ancestor, as both
+            would either detach the node from itself or create a cycle  */
+        if (node === this)
+            throw new Error("merge: cannot merge an AST node into itself")
+        for (let p = this.parent(); p !== null; p = p.parent())
+            if (p === node)
+                throw new Error("merge: cannot merge an ancestor AST node")
+
         if (takePos) {
             const pos = node.pos()
             this.pos(pos.line, pos.column, pos.offset)
