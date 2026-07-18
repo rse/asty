@@ -135,13 +135,13 @@ default export) and `ASTYNode`:
 
 - `ASTYNode#ins(pos: number, ...childs: ASTYChildSpec[]): ASTYNode`:<br/>
   Add one or more childs to a node, at a fixed position `pos`. The arguments `childs`
-  can either be ASTYNode objects or even arrays of ASTYNode objects.
+  can either be ASTYNode objects or arbitrarily nested arrays of ASTYNode objects.
   If `pos` is negative it counts from the end of child list,
   with `-1` the position before the last existing child.
 
 - `ASTYNode#add(...childs: ASTYChildSpec[]): ASTYNode`:<br/>
   Add one or more childs to a node, at the end of the child list. The arguments `childs`
-  can either be ASTYNode objects or even arrays of ASTYNode objects.
+  can either be ASTYNode objects or arbitrarily nested arrays of ASTYNode objects.
 
 - `ASTYNode#del(...childs: ASTYNode[]): ASTYNode`:<br/>
   Delete one or more childs from a node.
