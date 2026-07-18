@@ -134,7 +134,8 @@ export default class ASTYBase {
     set (key: string, value: ASTYAttributeValue): this
     set (...args: any[]): this {
         if (   args.length === 1
-            && typeof args[0] === "object") {
+            && typeof args[0] === "object"
+            && args[0] !== null) {
             Object.keys(args[0]).forEach((key) => {
                 if (args[0][key] !== undefined)
                     this.A[key] = args[0][key]
