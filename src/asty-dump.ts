@@ -61,6 +61,10 @@ export default class ASTYDump {
     dump (this: ASTYNodeT, maxDepth = Infinity, colorize: (type: string, txt: string) => string = (type, txt) => txt, unicode = true): string {
         let out = ""
         const self = this
+
+        /*  pre-select the tree glyph variant  */
+        const variant = unicode ? "unicode" : "ascii"
+        const glyph = (kind: keyof Tree) => tree[kind][variant]
         this.walk((node: ASTYNodeT, depth: number /*, parent: ASTYNodeT, when: string */) => {
             /*  short-circuit processing at a certain depth  */
             if (depth > maxDepth)
@@ -69,22 +73,12 @@ export default class ASTYDump {
             /*  draw tree structure  */
             if (depth > 0) {
                 const { nth, max } = nodeIndex(node)
-                let prefix = " "
-                if (unicode)
-                    prefix = `${tree.left.unicode}${tree.left.unicode}${prefix}`
-                else
-                    prefix = `${tree.left.ascii}${tree.left.ascii}${prefix}`
-                if (nth < max)
-                    prefix = `${unicode ? tree.mid.unicode : tree.mid.ascii}${prefix}`
-                else
-                    prefix = `${unicode ? tree.last.unicode : tree.last.ascii}${prefix}`
+                let prefix = `${glyph("left")}${glyph("left")} `
+                prefix = `${glyph(nth < max ? "mid" : "last")}${prefix}`
                 for (let parent = node.P; parent !== null && parent !== self; parent = parent.P) {
                     if (parent.P !== null) {
                         const { nth: pnth, max: pmax } = nodeIndex(parent)
-                        if (pnth < pmax)
-                            prefix = `${unicode ? tree.down.unicode : tree.down.ascii}   ${prefix}`
-                        else
-                            prefix = `    ${prefix}`
+                        prefix = pnth < pmax ? `${glyph("down")}   ${prefix}` : `    ${prefix}`
                     }
                 }
                 out += colorize("tree", prefix)
