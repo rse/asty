@@ -97,7 +97,7 @@ export default class ASTYSerialize {
                 node.add(clone.C.map((C: ASTYSerializedNode) => unserializeNode(C)))
             return node
         }
-        let obj: ASTYSerializationWrapper
+        let obj: unknown
         try {
             obj = JSON.parse(json)
         }
@@ -105,8 +105,9 @@ export default class ASTYSerialize {
             throw new Error("unserialize: not a valid JSON string")
         }
         if (   typeof obj !== "object" || obj === null
-            || typeof obj.ASTy !== "object" || obj.ASTy === null)
+            || typeof (obj as ASTYSerializationWrapper).ASTy !== "object"
+            || (obj as ASTYSerializationWrapper).ASTy === null)
             throw new Error("unserialize: not an ASTy JSON export")
-        return unserializeNode(obj.ASTy)
+        return unserializeNode((obj as ASTYSerializationWrapper).ASTy)
     }
 }
