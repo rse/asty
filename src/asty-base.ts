@@ -159,11 +159,16 @@ export default class ASTYBase {
     unset (...args: any[]): this {
         if (args.length === 1 && Array.isArray(args[0])) {
             args[0].forEach((key: string) => {
+                if (typeof key !== "string")
+                    throw new Error("unset: invalid key argument")
                 delete this.A[key]
             })
         }
-        else if (args.length === 1)
+        else if (args.length === 1) {
+            if (typeof args[0] !== "string")
+                throw new Error("unset: invalid key argument")
             delete this.A[args[0]]
+        }
         else
             throw new Error("unset: invalid number of arguments")
         return this
