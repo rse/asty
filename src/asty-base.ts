@@ -45,7 +45,7 @@ export type ASTYAttributeSet = { [ key: string ]: ASTYAttributeValue }
     mixin classes can refer to the full node type without creating a
     circular module import.  */
 export interface ASTYNodeT extends ASTYBase {
-    merge (node: ASTYNodeT, takePos?: boolean, attrMap?: { [ sourceAttr: string ]: string | null }): this
+    merge (node: ASTYNodeT | null, takePos?: boolean, attrMap?: { [ sourceAttr: string ]: string | null }): this
     walk (cb: (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: "downward" | "upward") => void,
         when?: "downward" | "upward" | "both"): this
     dump (maxDepth?: number, colorize?: (type: string, txt: string) => string, unicode?: boolean): string
