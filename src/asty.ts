@@ -104,9 +104,7 @@ export default class ASTYCtx {
     }
 
     isA (node: any): node is ASTYNode {
-        return (typeof node === "object"
-            && node instanceof this.ASTYNode
-            && typeof node.ASTy === "boolean"
+        return (node instanceof this.ASTYNode
             && node.ASTy === true)
     }
 
