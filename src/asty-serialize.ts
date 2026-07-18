@@ -37,7 +37,7 @@ interface ASTYSerializationWrapper {
 
 export default class ASTYSerialize {
     /*  recursively serialize AST nodes into JSON string  */
-    static serialize (asty: ASTYContext, node: any): string {
+    static serialize (asty: ASTYContext, node: unknown): string {
         const serializeNode = (node: ASTYNodeT): ASTYSerializedNode => {
             const clone: ASTYSerializedNode = {
                 T: node.T,
@@ -73,24 +73,18 @@ export default class ASTYSerialize {
     /*  recursively unserialize JSON string into AST nodes  */
     static unserialize (asty: ASTYContext, json: string): ASTYNodeT {
         const unserializeNode = (clone: ASTYSerializedNode): ASTYNodeT => {
+            if (   typeof clone !== "object" || clone === null
+                || typeof clone.T !== "string"
+                || typeof clone.L !== "object" || clone.L === null)
+                throw new Error("unserialize: not an ASTy JSON export")
             const node = asty.create(clone.T)
             node.pos(clone.L.L, clone.L.C, clone.L.O)
-            if (typeof clone.A === "object" && clone.A !== null) {
+
+            /*  no cloning needed, as JSON.parse already produced a fresh object graph  */
+            if (typeof clone.A === "object" && clone.A !== null)
                 Object.keys(clone.A).forEach((key) => {
-                    const value = clone.A![key]
-                    switch (typeof value) {
-                        case "boolean":
-                        case "number":
-                        case "string":
-                            node.set(key, value)
-                            break
-                        default:
-                            /*  use the slow approach only for non-atomic attributes  */
-                            node.set(key, structuredClone(value))
-                            break
-                    }
+                    node.set(key, clone.A![key])
                 })
-            }
             if (Array.isArray(clone.C))
                 node.add(clone.C.map((C: ASTYSerializedNode) => unserializeNode(C)))
             return node
