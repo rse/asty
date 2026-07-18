@@ -221,7 +221,7 @@ export default class ASTYBase {
         const _ins = (arg: ASTYChildSpec) => {
             if (Array.isArray(arg))
                 arg.forEach((child) => { _ins(child) })
-            else if (arg !== null) {
+            else if (arg !== null && arg !== undefined) {
                 if (!this.ctx.isA(arg))
                     throw new Error("ins: invalid AST node argument")
                 this.C.splice(pos++, 0, arg)
@@ -239,7 +239,7 @@ export default class ASTYBase {
         const _add = (arg: ASTYChildSpec) => {
             if (Array.isArray(arg))
                 arg.forEach((child) => { _add(child) })
-            else if (arg !== null) {
+            else if (arg !== null && arg !== undefined) {
                 if (!this.ctx.isA(arg))
                     throw new Error("add: invalid AST node argument")
                 this.C.push(arg)
