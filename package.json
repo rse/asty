@@ -20,6 +20,7 @@
     "module":                            "./dst-stage2/asty.esm.js",
     "main":                              "./dst-stage2/asty.cjs.js",
     "browser":                           "./dst-stage2/asty.umd.js",
+    "type":                              "module",
     "exports": {
         ".": {
             "import":                    { "types": "./dst-stage1/asty.d.ts", "default": "./dst-stage2/asty.esm.js" },
