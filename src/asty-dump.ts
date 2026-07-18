@@ -119,7 +119,7 @@ export default class ASTYDump {
                         }
                         case "object":
                             if (value instanceof RegExp)
-                                item += colorize("value", "/" + value.source + "/")
+                                item += colorize("value", "/" + value.source + "/" + value.flags)
                             else
                                 item += colorize("value", JSON.stringify(value))
                             break
