@@ -1,6 +1,6 @@
 /*
 **  ASTy -- Abstract Syntax Tree (AST) Data Structure
-**  Copyright (c) 2014-2024 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
 **  a copy of this software and associated documentation files (the
@@ -22,13 +22,20 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+import type { ASTYNodeT } from "./asty-base"
+
+export type ASTYWalkDirection = "downward" | "upward" | "both"
+export type ASTYWalkCallback = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: string) => void
+
 export default class ASTYWalk {
+    public C!: ASTYNodeT[]
+
     /*  walk the AST recursively  */
-    walk (cb, when = "downward") {
-        let _walk = (node, depth, parent) => {
+    walk (this: ASTYNodeT, cb: ASTYWalkCallback, when: ASTYWalkDirection = "downward"): ASTYNodeT {
+        const _walk = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null) => {
             if (when === "downward" || when === "both")
                 cb(node, depth, parent, "downward")
-            node.C.forEach((child) => {
+            node.C.forEach((child: ASTYNodeT) => {
                 _walk(child, depth + 1, node)
             })
             if (when === "upward" || when === "both")
@@ -38,4 +45,3 @@ export default class ASTYWalk {
         return this
     }
 }
-

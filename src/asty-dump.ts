@@ -1,6 +1,6 @@
 /*
 **  ASTy -- Abstract Syntax Tree (AST) Data Structure
-**  Copyright (c) 2014-2024 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
 **  a copy of this software and associated documentation files (the
@@ -22,35 +22,53 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-const tree = {
+import type { ASTYNodeT } from "./asty-base"
+
+interface TreeChars {
+    unicode: string
+    ascii: string
+}
+
+interface Tree {
+    mid: TreeChars
+    last: TreeChars
+    down: TreeChars
+    left: TreeChars
+}
+
+const tree: Tree = {
     mid:  { unicode: String.fromCharCode(9500), ascii: "+" },
     last: { unicode: String.fromCharCode(9492), ascii: "+" },
     down: { unicode: String.fromCharCode(9474), ascii: "|" },
     left: { unicode: String.fromCharCode(9472), ascii: "-" }
 }
 
+const hex = (ch: string) =>
+    ch.charCodeAt(0).toString(16).toUpperCase()
+
+const nodeIndex = (node: ASTYNodeT) => {
+    let nth = 0
+    let max = 0
+    if (node.P !== null) {
+        nth = node.P.C.indexOf(node)
+        max = node.P.C.length - 1
+    }
+    return { nth, max }
+}
+
 export default class ASTYDump {
     /*  dump the AST recursively  */
-    dump (maxDepth = Infinity, colorize = (type, txt) => txt, unicode = true) {
+    dump (this: ASTYNodeT, maxDepth = Infinity, colorize: (type: string, txt: string) => string = (type, txt) => txt, unicode = true): string {
         let out = ""
-        let self = this
-        this.walk((node, depth /*, parent, when */) => {
+        const self = this
+        this.walk((node: ASTYNodeT, depth: number /*, parent: ASTYNodeT, when: string */) => {
             /*  short-circuit processing at a certain depth  */
             if (depth > maxDepth)
                 return
 
             /*  draw tree structure  */
             if (depth > 0) {
-                const nodeIndex = (node) => {
-                    let nth = 0
-                    let max = 0
-                    if (node.P !== null) {
-                        nth = node.P.C.indexOf(node)
-                        max = node.P.C.length - 1
-                    }
-                    return { nth, max }
-                }
-                let { nth, max } = nodeIndex(node)
+                const { nth, max } = nodeIndex(node)
                 let prefix = " "
                 if (unicode)
                     prefix = `${tree.left.unicode}${tree.left.unicode}${prefix}`
@@ -62,7 +80,7 @@ export default class ASTYDump {
                     prefix = `${unicode ? tree.last.unicode : tree.last.ascii}${prefix}`
                 for (let parent = node.P; parent !== null && parent !== self; parent = parent.P) {
                     if (parent.P !== null) {
-                        let { nth, max } = nodeIndex(parent)
+                        const { nth, max } = nodeIndex(parent)
                         if (nth < max)
                             prefix = `${unicode ? tree.down.unicode : tree.down.ascii}   ${prefix}`
                         else
@@ -76,7 +94,7 @@ export default class ASTYDump {
             out += colorize("type", node.T) + " "
 
             /*  draw node attributes  */
-            let keys = Object.keys(node.A)
+            const keys = Object.keys(node.A)
                 .filter((key) => !key.match(/^__/))
             if (keys.length > 0) {
                 out += colorize("parenthesis", "(")
@@ -87,14 +105,13 @@ export default class ASTYDump {
                     else
                         first = false
                     out += colorize("key", key) + colorize("colon", ":") + " "
-                    let value = node.A[key]
+                    const value = node.A[key]
                     switch (typeof value) {
                         case "boolean":
                         case "number":
                             out += colorize("value", value.toString())
                             break
                         case "string": {
-                            let hex = (ch) => ch.charCodeAt(0).toString(16).toUpperCase()
                             /* eslint no-control-regex: off */
                             out += colorize("value", "\"" +
                                 value.replace(/\\/g, "\\\\")
@@ -128,9 +145,9 @@ export default class ASTYDump {
             /*  draw node position  */
             out += colorize("position",
                 colorize("bracket", "[") +
-                colorize("line", node.L.L) +
+                colorize("line", String(node.L.L)) +
                 colorize("slash", ",") +
-                colorize("column", node.L.C) +
+                colorize("column", String(node.L.C)) +
                 colorize("bracket", "]"))
 
             out += "\n"
@@ -138,4 +155,3 @@ export default class ASTYDump {
         return out
     }
 }
-

@@ -1,6 +1,6 @@
 ##
 ##  ASTy -- Abstract Syntax Tree (AST) Data Structure
-##  Copyright (c) 2014-2024 Dr. Ralf S. Engelschall <rse@engelschall.com>
+##  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
 ##
 ##  Permission is hereby granted, free of charge, to any person obtaining
 ##  a copy of this software and associated documentation files (the
@@ -22,20 +22,25 @@
 ##  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ##
 
-NPM   = npm
-GRUNT = ./node_modules/grunt-cli/bin/grunt
+NPM = npm
 
 all: build
 
 bootstrap:
-	@if [ ! -x $(GRUNT) ]; then $(NPM) install; fi
+	@if [ ! -d node_modules ]; then $(NPM) install; fi
+
+lint: bootstrap
+	@$(NPM) start lint
 
 build: bootstrap
-	@$(GRUNT)
+	@$(NPM) start build
+
+test: bootstrap
+	@$(NPM) start test
 
 clean: bootstrap
-	@$(GRUNT) clean:clean
+	@$(NPM) start clean
 
 distclean: bootstrap
-	@$(GRUNT) clean:clean clean:distclean
+	@$(NPM) start distclean
 

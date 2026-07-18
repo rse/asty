@@ -1,0 +1,126 @@
+/*
+**  ASTy -- Abstract Syntax Tree (AST) Data Structure
+**  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**
+**  Permission is hereby granted, free of charge, to any person obtaining
+**  a copy of this software and associated documentation files (the
+**  "Software"), to deal in the Software without restriction, including
+**  without limitation the rights to use, copy, modify, merge, publish,
+**  distribute, sublicense, and/or sell copies of the Software, and to
+**  permit persons to whom the Software is furnished to do so, subject to
+**  the following conditions:
+**
+**  The above copyright notice and this permission notice shall be included
+**  in all copies or substantial portions of the Software.
+**
+**  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+**  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+**  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+**  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+**  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+**  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+**  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+{
+    "plugins": [
+        "typescript",
+        "unicorn",
+        "import",
+        "promise",
+        "node",
+        "oxc"
+    ],
+    "categories": {
+        "correctness": "error",
+        "suspicious":  "warn",
+        "pedantic":    "warn",
+        "perf":        "warn",
+        "style":       "warn",
+        "restriction": "warn"
+    },
+    "rules": {
+        "ban-types":                        "off",
+        "callback-return":                  "off",
+        "capitalized-comments":             "off",
+        "catch-error-name":                 "off",
+        "class-methods-use-this":           "off",
+        "consistent-indexed-object-style":  "off",
+        "consistent-type-definitions":      "off",
+        "curly":                            "off",
+        "explicit-member-accessibility":    "off",
+        "explicit-function-return-type":    "off",
+        "explicit-length-check":            "off",
+        "explicit-module-boundary-types":   "off",
+        "exports-last":                     "off",
+        "func-style":                       "off",
+        "group-exports":                    "off",
+        "id-length":                        "off",
+        "init-declarations":                "off",
+        "max-classes-per-file":             "off",
+        "max-depth":                        "off",
+        "max-lines":                        "off",
+        "max-lines-per-function":           "off",
+        "max-params":                       "off",
+        "max-statements":                   "off",
+        "method-signature-style":           "off",
+        "no-bitwise":                       "off",
+        "no-continue":                      "off",
+        "no-control-regex":                 "off",
+        "no-default-export":                "off",
+        "no-duplicate-imports":             "off",
+        "no-dynamic-delete":                "off",
+        "no-empty-function":                "off",
+        "no-empty-object-type":             "off",
+        "no-explicit-any":                  "off",
+        "no-extraneous-class":              "off",
+        "no-hex-escape":                    "off",
+        "no-inline-comments":               "off",
+        "no-magic-numbers":                 "off",
+        "no-named-as-default-member":       "off",
+        "no-named-export":                  "off",
+        "no-namespace":                     "off",
+        "no-negated-condition":             "off",
+        "unicorn/no-negated-condition":     "off",
+        "no-non-null-assertion":            "off",
+        "no-null":                          "off",
+        "no-optional-chaining":             "off",
+        "no-param-reassign":                "off",
+        "no-plusplus":                      "off",
+        "no-relative-parent-imports":       "off",
+        "no-shadow":                        "off",
+        "no-ternary":                       "off",
+        "no-underscore-dangle":             "off",
+        "no-undefined":                     "off",
+        "no-unnecessary-type-constraint":   "off",
+        "no-unused-vars":                   "off",
+        "numeric-separators-style":         "off",
+        "prefer-code-point":                "off",
+        "prefer-named-capture-group":       "off",
+        "prefer-number-coercion":           "off",
+        "prefer-for-of":                    "off",
+        "prefer-math-trunc":                "off",
+        "prefer-optional-catch-binding":    "off",
+        "prefer-string-raw":                "off",
+        "prefer-string-replace-all":        "off",
+        "prefer-string-slice":              "off",
+        "prefer-template":                  "off",
+        "unicorn/prefer-ternary":           "off",
+        "require-unicode-regexp":           "off",
+        "sort-imports":                     "off",
+        "sort-keys":                        "off",
+        "unicorn/prefer-spread":            "off",
+        "no-array-for-each":                "off",
+        "switch-case-braces":               "off",
+        "consistent-existence-index-check": "off",
+        "prefer-destructuring":             "off",
+        "no-else-return":                   "off",
+        "prefer-regexp-test":               "off",
+        "no-this-alias":                    "off",
+        "no-this-assignment":               "off",
+        "no-static-only-class":             "off",
+        "array-type":                       "off",
+        "prefer-await-to-callbacks":        "off"
+    }
+}
+

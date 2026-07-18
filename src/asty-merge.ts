@@ -1,6 +1,6 @@
 /*
 **  ASTy -- Abstract Syntax Tree (AST) Data Structure
-**  Copyright (c) 2014-2024 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
 **  a copy of this software and associated documentation files (the
@@ -22,31 +22,36 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+import type { ASTYNodeT } from "./asty-base"
+
+interface ASTYAttributeMap {
+    [sourceAttr: string]: string | null
+}
+
 export default class ASTYMerge {
     /*  merge attributes and childs of an AST node  */
-    merge (node, takePos = false, attrMap = {}) {
+    merge (this: ASTYNodeT, node: ASTYNodeT | null, takePos = false, attrMap: ASTYAttributeMap = {}): ASTYNodeT {
         if (node === null)
             return this
         if (!this.ctx.isA(node))
             throw new Error("merge: invalid AST node argument")
         if (takePos) {
-            let pos = node.pos()
+            const pos = node.pos()
             this.pos(pos.line, pos.column, pos.offset)
         }
-        node.attrs().forEach((attrSource) => {
-            let attrTarget = (typeof attrMap[attrSource] !== "undefined" ?
+        node.attrs().forEach((attrSource: string) => {
+            const attrTarget = (attrMap[attrSource] !== undefined ?
                 attrMap[attrSource] : attrSource)
             if (attrTarget !== null)
                 this.set(attrTarget, node.get(attrSource))
         })
-        node.childs().forEach((child) => {
+        node.childs().forEach((child: ASTYNodeT) => {
             node.del(child)
             this.add(child)
         })
-        let parent = node.parent()
+        const parent = node.parent()
         if (parent !== null)
             parent.del(node)
         return this
     }
 }
-

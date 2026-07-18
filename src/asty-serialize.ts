@@ -1,6 +1,6 @@
 /*
 **  ASTy -- Abstract Syntax Tree (AST) Data Structure
-**  Copyright (c) 2014-2024 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
 **  a copy of this software and associated documentation files (the
@@ -22,34 +22,47 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+import type { ASTYNodeT, ASTYContext, ASTYAttributeSet, ASTYPositionInternal } from "./asty-base"
+
+interface ASTYSerializedNode {
+    T: string
+    L: ASTYPositionInternal
+    A?: ASTYAttributeSet
+    C?: ASTYSerializedNode[]
+}
+
+interface ASTYSerializationWrapper {
+    ASTy: ASTYSerializedNode
+}
+
 export default class ASTYSerialize {
     /*  recursively serialize AST nodes into JSON string  */
-    static serialize (asty, node) {
-        const serializeNode = (node) => {
-            let clone = {
+    static serialize (asty: ASTYContext, node: any): string {
+        const serializeNode = (node: ASTYNodeT): ASTYSerializedNode => {
+            const clone: ASTYSerializedNode = {
                 T: node.T,
                 L: { L: node.L.L, C: node.L.C, O: node.L.O }
             }
-            let keys = Object.keys(node.A)
+            const keys = Object.keys(node.A)
             if (keys.length > 0) {
                 clone.A = {}
                 keys.forEach((key) => {
-                    let value = node.A[key]
+                    const value = node.A[key]
                     switch (typeof value) {
                         case "boolean":
                         case "number":
                         case "string":
-                            clone.A[key] = value
+                            clone.A![key] = value
                             break
                         default:
                             /*  use the slow approach only for non-atomic attributes  */
-                            clone.A[key] = JSON.parse(JSON.stringify(value))
+                            clone.A![key] = structuredClone(value)
                             break
                     }
                 })
             }
             if (node.C.length > 0)
-                clone.C = node.C.map((C) => serializeNode(C))
+                clone.C = node.C.map((C: ASTYNodeT) => serializeNode(C))
             return clone
         }
         if (!asty.isA(node))
@@ -58,13 +71,13 @@ export default class ASTYSerialize {
     }
 
     /*  recursively unserialize JSON string into AST nodes  */
-    static unserialize (asty, json) {
-        const unserializeNode = (clone) => {
-            let node = asty.create(clone.T)
+    static unserialize (asty: ASTYContext, json: string): ASTYNodeT {
+        const unserializeNode = (clone: ASTYSerializedNode): ASTYNodeT => {
+            const node = asty.create(clone.T)
             node.pos(clone.L.L, clone.L.C, clone.L.O)
             if (typeof clone.A === "object") {
                 Object.keys(clone.A).forEach((key) => {
-                    let value = clone.A[key]
+                    const value = clone.A![key]
                     switch (typeof value) {
                         case "boolean":
                         case "number":
@@ -73,19 +86,18 @@ export default class ASTYSerialize {
                             break
                         default:
                             /*  use the slow approach only for non-atomic attributes  */
-                            node.set(key, JSON.parse(JSON.stringify(value)))
+                            node.set(key, structuredClone(value))
                             break
                     }
                 })
             }
-            if (typeof clone.C === "object" && clone.C instanceof Array)
-                node.add(clone.C.map((C) => unserializeNode(C)))
+            if (typeof clone.C === "object" && Array.isArray(clone.C))
+                node.add(clone.C.map((C: ASTYSerializedNode) => unserializeNode(C)))
             return node
         }
-        let obj = JSON.parse(json)
+        const obj: ASTYSerializationWrapper = JSON.parse(json)
         if (typeof obj !== "object" || typeof obj.ASTy !== "object")
             throw new Error("unserialize: not an ASTy JSON export")
         return unserializeNode(obj.ASTy)
     }
 }
-

@@ -1,6 +1,6 @@
 /*
 **  ASTy -- Abstract Syntax Tree (AST) Data Structure
-**  Copyright (c) 2014-2024 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Copyright (c) 2014-2026 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
 **  a copy of this software and associated documentation files (the
@@ -22,39 +22,87 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/*  the external AST node parsing position  */
+export interface ASTYPosition {
+    line:   number
+    column: number
+    offset: number
+}
+
+/*  the internal AST node parsing position (compact storage form)  */
+export interface ASTYPositionInternal {
+    L: number
+    C: number
+    O: number
+}
+
+/*  the attribute value and attribute set types  */
+export type ASTYAttributeValue = any
+export type ASTYAttributeSet = { [ key: string ]: ASTYAttributeValue }
+
+/*  the composed public AST node type. It is declared here (instead of
+    in asty.ts, where it is composed and re-exported from) so that the
+    mixin classes can refer to the full node type without creating a
+    circular module import.  */
+export interface ASTYNodeT extends ASTYBase {
+    merge (node: ASTYNodeT, takePos?: boolean, attrMap?: { [ sourceAttr: string ]: string | null }): this
+    walk (cb: (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: string) => void,
+        when?: "downward" | "upward" | "both"): this
+    dump (maxDepth?: number, colorize?: (type: string, txt: string) => string, unicode?: boolean): string
+}
+
+/*  the child AST node specification, as accepted by ins/add/del  */
+export type ASTYChildSpec = ASTYNodeT | ASTYChildSpec[]
+
+/*  the AST context, as seen by the AST nodes and the mixin classes  */
+export interface ASTYContext {
+    isA(node: any): node is ASTYNodeT
+    create(T?: string, A?: ASTYAttributeSet, C?: ASTYChildSpec[]): ASTYNodeT
+    __serialize(node: ASTYNodeT): string
+}
+
 export default class ASTYBase {
+    public ctx!:  ASTYContext
+    public ASTy!: boolean
+    public T!:    string
+    public L!:    ASTYPositionInternal
+    public A!:    ASTYAttributeSet
+    public C!:    ASTYNodeT[]
+    public P!:    ASTYNodeT | null
+
     /*  AST node initialization  */
-    init (ctx, T, A, C) {
+    init (this: ASTYNodeT, ctx: ASTYContext, T?: string, A?: ASTYAttributeSet, C?: ASTYChildSpec[]): ASTYNodeT {
         if (arguments.length < 2)
             throw new Error("init: invalid number of arguments")
         this.ctx = ctx
         this.ASTy = true
-        this.T = T
+        this.T = T ?? ""
         this.L = { L: 0, C: 0, O: 0 }
         this.A = {}
         this.C = []
         this.P = null
-        if (typeof A === "object") {
-            for (let name in A)
-                if (Object.prototype.hasOwnProperty.call(A, name))
+        if (typeof A === "object")
+            for (const name in A)
+                if (Object.hasOwn(A, name))
                     this.set(name, A[name])
-        }
-        if (typeof C === "object" && C instanceof Array)
+        if (typeof C === "object" && Array.isArray(C))
             this.add(C)
         return this
     }
 
     /*  create new AST node  */
-    create (T, A, C) {
+    create (T?: string, A?: ASTYAttributeSet, C?: ASTYChildSpec[]): ASTYNodeT {
         return this.ctx.create(T, A, C)
     }
 
     /*  check the type of an AST node  */
-    type (T) {
+    type (): string
+    type (T: string): this
+    type (T?: string): string | this {
         if (arguments.length === 0)
             return this.T
         else if (arguments.length === 1) {
-            this.T = T
+            this.T = T!
             return this
         }
         else
@@ -62,7 +110,9 @@ export default class ASTYBase {
     }
 
     /*  set the parsing position   */
-    pos (line, column, offset) {
+    pos (): ASTYPosition
+    pos (line: number, column?: number, offset?: number): this
+    pos (line?: number, column?: number, offset?: number): ASTYPosition | this {
         if (arguments.length === 0)
             return {
                 line:   this.L.L,
@@ -70,9 +120,9 @@ export default class ASTYBase {
                 offset: this.L.O
             }
         else if (arguments.length <= 3) {
-            this.L.L = line   || 0
-            this.L.C = column || 0
-            this.L.O = offset || 0
+            this.L.L = line   ?? 0
+            this.L.C = column ?? 0
+            this.L.O = offset ?? 0
             return this
         }
         else
@@ -80,7 +130,9 @@ export default class ASTYBase {
     }
 
     /*  set AST node attributes  */
-    set (...args) {
+    set (attrs: ASTYAttributeSet): this
+    set (key: string, value: ASTYAttributeValue): this
+    set (...args: any[]): this {
         if (   args.length === 1
             && typeof args[0] === "object") {
             Object.keys(args[0]).forEach((key) => {
@@ -102,11 +154,12 @@ export default class ASTYBase {
     }
 
     /*  unset AST node attributes  */
-    unset (...args) {
+    unset (key: string | string[]): this
+    unset (...args: any[]): this {
         if (   args.length === 1
             && typeof args[0] === "object"
-            && args[0] instanceof Array   ) {
-            args[0].forEach((key) => {
+            && Array.isArray(args[0])   ) {
+            args[0].forEach((key: string) => {
                 delete this.A[key]
             })
         }
@@ -118,18 +171,19 @@ export default class ASTYBase {
     }
 
     /*  get AST node attributes  */
-    get (...args) {
+    get (key: string | string[]): ASTYAttributeValue
+    get (...args: any[]): any {
         if (args.length !== 1)
             throw new Error("get: invalid number of arguments")
-        if (typeof args[0] === "object" && args[0] instanceof Array) {
-            return args[0].map((key) => {
+        if (typeof args[0] === "object" && Array.isArray(args[0])) {
+            return args[0].map((key: string) => {
                 if (typeof key !== "string")
                     throw new Error("get: invalid key argument")
                 return this.A[key]
             })
         }
         else {
-            let key = args[0]
+            const key = args[0]
             if (typeof key !== "string")
                 throw new Error("get: invalid key argument")
             return this.A[key]
@@ -137,36 +191,36 @@ export default class ASTYBase {
     }
 
     /*  get names of all AST node attributes  */
-    attrs () {
+    attrs (): string[] {
         return Object.keys(this.A)
     }
 
     /*  return current sibling position  */
-    nth () {
+    nth (this: ASTYNodeT): number {
         if (this.P === null)
             return 1
-        let idx = this.P.C.indexOf(this)
+        const idx = this.P.C.indexOf(this)
         if (idx < 0)
             throw new Error("nth: internal error -- node not in childs of its parent")
         return idx
     }
 
     /*  insert child AST node(s)  */
-    ins (pos, ...args) {
+    ins (this: ASTYNodeT, pos: number, ...args: ASTYChildSpec[]): ASTYNodeT {
         if (args.length === 0)
             throw new Error("ins: invalid number of arguments")
         if (pos < 0)
             pos = (this.C.length + 1) - pos
         if (!(pos >= 0 && pos <= this.C.length))
             throw new Error("ins: invalid position")
-        let _ins = (node) => {
+        const _ins = (node: ASTYChildSpec) => {
             if (!this.ctx.isA(node))
                 throw new Error("ins: invalid AST node argument")
             this.C.splice(pos++, 0, node)
             node.P = this
         }
         args.forEach((arg) => {
-            if (typeof arg === "object" && arg instanceof Array)
+            if (typeof arg === "object" && Array.isArray(arg))
                 arg.forEach((arg) => { _ins(arg) })
             else if (arg !== null)
                 _ins(arg)
@@ -175,17 +229,17 @@ export default class ASTYBase {
     }
 
     /*  add child AST node(s)  */
-    add (...args) {
+    add (this: ASTYNodeT, ...args: ASTYChildSpec[]): ASTYNodeT {
         if (args.length === 0)
             throw new Error("add: invalid number of arguments")
-        let _add = (node) => {
+        const _add = (node: ASTYChildSpec) => {
             if (!this.ctx.isA(node))
                 throw new Error("add: invalid AST node argument")
             this.C.push(node)
             node.P = this
         }
         args.forEach((arg) => {
-            if (typeof arg === "object" && arg instanceof Array)
+            if (typeof arg === "object" && Array.isArray(arg))
                 arg.forEach((arg) => { _add(arg) })
             else if (arg !== null)
                 _add(arg)
@@ -194,7 +248,7 @@ export default class ASTYBase {
     }
 
     /*  delete child AST node(s)  */
-    del (...args) {
+    del (this: ASTYNodeT, ...args: ASTYNodeT[]): ASTYNodeT {
         if (args.length === 0)
             throw new Error("del: invalid number of arguments")
         args.forEach((node) => {
@@ -216,7 +270,8 @@ export default class ASTYBase {
     }
 
     /*  get all or some child AST nodes  */
-    childs (...args) {
+    childs (start?: number, end?: number): ASTYNodeT[]
+    childs (...args: any[]): ASTYNodeT[] {
         if (args.length > 2)
             throw new Error("childs: invalid number of arguments")
         if (args.length === 2 && typeof args[0] === "number" && typeof args[1] === "number")
@@ -230,20 +285,19 @@ export default class ASTYBase {
     }
 
     /*  get one child AST node  */
-    child (pos) {
+    child (pos: number): ASTYNodeT | null {
         if (typeof pos !== "number")
             throw new Error("child: invalid argument")
         return (pos < this.C.length ? this.C[pos] : null)
     }
 
     /*  get parent AST node  */
-    parent () {
+    parent (): ASTYNodeT | null {
         return this.P
     }
 
     /*  serialize AST node recursively  */
-    serialize () {
+    serialize (this: ASTYNodeT): string {
         return this.ctx.__serialize(this)
     }
 }
-

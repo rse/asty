@@ -1,2 +1,6 @@
 node_modules
 lib
+dst-stage1
+dst-stage2
+etc/tsc.tsbuildinfo
+.ase
