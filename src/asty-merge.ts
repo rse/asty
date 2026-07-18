@@ -54,9 +54,8 @@ export default class ASTYMerge {
             if (attrTarget !== null)
                 this.set(attrTarget, node.get(attrSource))
         })
-        /*  snapshot childs, as del() mutates the live childs array  */
-        const childs = node.childs().slice()
-        childs.forEach((child: ASTYNodeT) => {
+        /*  move over all child AST nodes (childs() already returns a copy)  */
+        node.childs().forEach((child: ASTYNodeT) => {
             node.del(child)
             this.add(child)
         })
