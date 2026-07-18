@@ -56,7 +56,12 @@ export default class ASTYSerialize {
                             break
                         default:
                             /*  use the slow approach only for non-atomic attributes  */
-                            clone.A![key] = structuredClone(value)
+                            try {
+                                clone.A![key] = structuredClone(value)
+                            }
+                            catch {
+                                throw new Error(`serialize: attribute "${key}" has a non-serializable value`)
+                            }
                             break
                     }
                 })
