@@ -59,7 +59,10 @@ export default class ASTYCtx {
     public ASTYNode: new () => ASTYNode
 
     constructor () {
+        /*  synthesize a fresh, per-context AST node class  */
         this.ASTYNode = class ASTYNode {} as unknown as new () => ASTYNode
+
+        /*  the mixin classes and the methods contributed by each  */
         const mixins: Array<[any, ...string[]]> = [
             [ ASTYBase,
                 "init", "create", "type", "pos",
@@ -71,6 +74,8 @@ export default class ASTYCtx {
             [ ASTYWalk,  "walk" ],
             [ ASTYDump,  "dump" ]
         ]
+
+        /*  copy the mixin methods onto the node prototype  */
         mixins.forEach((mixin) => {
             const proto = (mixin[0] as any).prototype
             mixin.slice(1).forEach((method) => {
