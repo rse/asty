@@ -109,7 +109,7 @@ export default class ASTYCtx {
     }
 
     __serialize (node: ASTYNode): string {
-        return ASTYCtx.serialize(node)
+        return ASTYSerialize.serialize(this, node)
     }
 
     static serialize (node: ASTYNode): string {
