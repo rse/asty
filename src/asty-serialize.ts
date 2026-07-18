@@ -91,7 +91,7 @@ export default class ASTYSerialize {
                     }
                 })
             }
-            if (typeof clone.C === "object" && Array.isArray(clone.C))
+            if (Array.isArray(clone.C))
                 node.add(clone.C.map((C: ASTYSerializedNode) => unserializeNode(C)))
             return node
         }
