@@ -95,7 +95,7 @@ export default class ASTYDump {
 
             /*  draw node attributes  */
             const keys = Object.keys(node.A)
-                .filter((key) => !key.match(/^__/))
+                .filter((key) => !key.startsWith("__"))
             if (keys.length > 0) {
                 out += colorize("parenthesis", "(")
                 let first = true
