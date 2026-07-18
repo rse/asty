@@ -130,13 +130,14 @@ default export) and `ASTYNode`:
 
 - `ASTYNode#nth(): number`:<br/>
   Get position among sibling nodes in parent's child node list.
-  The positions start at 0.
+  The positions start at 0. For a root node (a node without a parent),
+  `0` is returned.
 
 - `ASTYNode#ins(pos: number, ...childs: ASTYChildSpec[]): ASTYNode`:<br/>
   Add one or more childs to a node, at a fixed position `pos`. The arguments `childs`
   can either be ASTYNode objects or even arrays of ASTYNode objects.
   If `pos` is negative it counts from the end of child list,
-  with `-1` the position after the last existing child.
+  with `-1` the position before the last existing child.
 
 - `ASTYNode#add(...childs: ASTYChildSpec[]): ASTYNode`:<br/>
   Add one or more childs to a node, at the end of the child list. The arguments `childs`

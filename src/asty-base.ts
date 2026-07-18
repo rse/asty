@@ -210,7 +210,7 @@ export default class ASTYBase {
         if (args.length === 0)
             throw new Error("ins: invalid number of arguments")
         if (pos < 0)
-            pos = (this.C.length + 1) - pos
+            pos = this.C.length + pos
         if (!(pos >= 0 && pos <= this.C.length))
             throw new Error("ins: invalid position")
         const _ins = (node: ASTYChildSpec) => {

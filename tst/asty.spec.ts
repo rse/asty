@@ -223,6 +223,39 @@ describe("ASTy Library", function () {
         expect(() => root.ins(99, asty.create("x"))).to.throw()
         expect(() => (root as any).ins(0, "nonode")).to.throw()
     })
+    it("node insert at negative position functionality", () => {
+        const asty = new ASTy()
+        const mk = () => {
+            const root = asty.create("root")
+            root.add(asty.create("c0"), asty.create("c1"), asty.create("c2"))
+            return root
+        }
+        const types = (node: any) => node.childs().map((child: any) => child.type())
+
+        /*  -1 is the position before the last existing child  */
+        const root1 = mk()
+        root1.ins(-1, asty.create("X"))
+        expect(types(root1)).to.be.deep.equal([ "c0", "c1", "X", "c2" ])
+
+        /*  negative positions count further from the end of the child list  */
+        const root2 = mk()
+        root2.ins(-2, asty.create("X"))
+        expect(types(root2)).to.be.deep.equal([ "c0", "X", "c1", "c2" ])
+
+        /*  the most negative in-range position prepends  */
+        const root3 = mk()
+        root3.ins(-3, asty.create("X"))
+        expect(types(root3)).to.be.deep.equal([ "X", "c0", "c1", "c2" ])
+
+        /*  multiple childs keep their relative order  */
+        const root4 = mk()
+        root4.ins(-1, asty.create("X"), asty.create("Y"))
+        expect(types(root4)).to.be.deep.equal([ "c0", "c1", "X", "Y", "c2" ])
+        expect(root4.child(2)!.parent()).to.be.equal(root4)
+
+        /*  out-of-range negative positions are rejected  */
+        expect(() => mk().ins(-4, asty.create("X"))).to.throw()
+    })
     it("node delete functionality", () => {
         const asty = new ASTy()
         const root = asty.create("root")
