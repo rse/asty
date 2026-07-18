@@ -271,7 +271,7 @@ export default class ASTYBase {
         else if (args.length === 1 && typeof args[0] === "number")
             return this.C.slice(args[0])
         else if (args.length === 0)
-            return this.C
+            return this.C.slice()
         else
             throw new Error("childs: invalid type of arguments")
     }
