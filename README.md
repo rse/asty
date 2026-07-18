@@ -67,7 +67,10 @@ default export) and `ASTYNode`:
 - `type ASTYWalkDirection = "downward" | "upward" | "both"`:<br/>
   The walking direction, as accepted by `ASTYNode#walk`.
 
-- `type ASTYWalkCallback = (node: ASTYNode, depth: number, parent: ASTYNode | null, when?: string) => void`:<br/>
+- `type ASTYWalkWhen = "downward" | "upward"`:<br/>
+  The walking phase a node is visited in, as passed to `ASTYWalkCallback`.
+
+- `type ASTYWalkCallback = (node: ASTYNode, depth: number, parent: ASTYNode | null, when?: ASTYWalkWhen) => void`:<br/>
   The callback function, as accepted by `ASTYNode#walk`.
 
 ### ASTy Context (ASTYCtx)

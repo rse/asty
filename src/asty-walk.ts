@@ -25,7 +25,8 @@
 import type { ASTYNodeT } from "./asty-base"
 
 export type ASTYWalkDirection = "downward" | "upward" | "both"
-export type ASTYWalkCallback = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: string) => void
+export type ASTYWalkWhen      = "downward" | "upward"
+export type ASTYWalkCallback  = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: ASTYWalkWhen) => void
 
 export default class ASTYWalk {
     /*  walk the AST recursively  */
