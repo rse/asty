@@ -75,7 +75,7 @@ export default class ASTYSerialize {
         const unserializeNode = (clone: ASTYSerializedNode): ASTYNodeT => {
             const node = asty.create(clone.T)
             node.pos(clone.L.L, clone.L.C, clone.L.O)
-            if (typeof clone.A === "object") {
+            if (typeof clone.A === "object" && clone.A !== null) {
                 Object.keys(clone.A).forEach((key) => {
                     const value = clone.A![key]
                     switch (typeof value) {
@@ -96,7 +96,8 @@ export default class ASTYSerialize {
             return node
         }
         const obj: ASTYSerializationWrapper = JSON.parse(json)
-        if (typeof obj !== "object" || typeof obj.ASTy !== "object")
+        if (   typeof obj !== "object" || obj === null
+            || typeof obj.ASTy !== "object" || obj.ASTy === null)
             throw new Error("unserialize: not an ASTy JSON export")
         return unserializeNode(obj.ASTy)
     }

@@ -81,7 +81,7 @@ export default class ASTYBase {
         this.A = {}
         this.C = []
         this.P = null
-        if (typeof A === "object")
+        if (typeof A === "object" && A !== null)
             for (const name in A)
                 if (Object.hasOwn(A, name))
                     this.set(name, A[name])
