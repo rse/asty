@@ -85,7 +85,7 @@ export default class ASTYBase {
             for (const name in A)
                 if (Object.hasOwn(A, name))
                     this.set(name, A[name])
-        if (typeof C === "object" && Array.isArray(C))
+        if (Array.isArray(C))
             this.add(C)
         return this
     }
@@ -156,9 +156,7 @@ export default class ASTYBase {
     /*  unset AST node attributes  */
     unset (key: string | string[]): this
     unset (...args: any[]): this {
-        if (   args.length === 1
-            && typeof args[0] === "object"
-            && Array.isArray(args[0])   ) {
+        if (args.length === 1 && Array.isArray(args[0])) {
             args[0].forEach((key: string) => {
                 delete this.A[key]
             })
@@ -175,7 +173,7 @@ export default class ASTYBase {
     get (...args: any[]): any {
         if (args.length !== 1)
             throw new Error("get: invalid number of arguments")
-        if (typeof args[0] === "object" && Array.isArray(args[0])) {
+        if (Array.isArray(args[0])) {
             return args[0].map((key: string) => {
                 if (typeof key !== "string")
                     throw new Error("get: invalid key argument")
@@ -220,7 +218,7 @@ export default class ASTYBase {
             node.P = this
         }
         args.forEach((arg) => {
-            if (typeof arg === "object" && Array.isArray(arg))
+            if (Array.isArray(arg))
                 arg.forEach((child) => { _ins(child) })
             else if (arg !== null)
                 _ins(arg)
@@ -239,7 +237,7 @@ export default class ASTYBase {
             node.P = this
         }
         args.forEach((arg) => {
-            if (typeof arg === "object" && Array.isArray(arg))
+            if (Array.isArray(arg))
                 arg.forEach((child) => { _add(child) })
             else if (arg !== null)
                 _add(arg)
