@@ -91,6 +91,9 @@ export default class ASTYSerialize {
             /*  no cloning needed, as JSON.parse already produced a fresh object graph  */
             if (typeof clone.A === "object" && clone.A !== null)
                 Object.keys(clone.A).forEach((key) => {
+                    /*  reject prototype-polluting keys from untrusted input  */
+                    if (key === "__proto__" || key === "constructor" || key === "prototype")
+                        throw new Error(`unserialize: invalid attribute name "${key}"`)
                     node.set(key, clone.A![key])
                 })
             if (Array.isArray(clone.C))
