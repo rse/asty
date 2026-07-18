@@ -35,7 +35,7 @@ export default class ASTYWalk {
         const _walk = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null) => {
             if (when === "downward" || when === "both")
                 cb(node, depth, parent, "downward")
-            node.C.forEach((child: ASTYNodeT) => {
+            node.C.slice().forEach((child: ASTYNodeT) => {
                 _walk(child, depth + 1, node)
             })
             if (when === "upward" || when === "both")
