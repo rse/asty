@@ -254,17 +254,11 @@ export default class ASTYBase {
         args.forEach((node) => {
             if (!this.ctx.isA(node))
                 throw new Error("del: invalid AST node argument")
-            let found = false
-            for (let j = 0; j < this.C.length; j++) {
-                if (this.C[j] === node) {
-                    this.C.splice(j, 1)
-                    node.P = null
-                    found = true
-                    break
-                }
-            }
-            if (!found)
+            const idx = this.C.indexOf(node)
+            if (idx < 0)
                 throw new Error("del: AST node not found in childs")
+            this.C.splice(idx, 1)
+            node.P = null
         })
         return this
     }
