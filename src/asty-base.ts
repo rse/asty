@@ -175,7 +175,8 @@ export default class ASTYBase {
     }
 
     /*  get AST node attributes  */
-    get (key: string | string[]): ASTYAttributeValue
+    get (key: string): ASTYAttributeValue
+    get (key: string[]): ASTYAttributeValue[]
     get (...args: any[]): any {
         if (args.length !== 1)
             throw new Error("get: invalid number of arguments")
