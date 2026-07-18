@@ -92,22 +92,17 @@ export default class ASTYDump {
                 .filter((key) => !key.startsWith("__"))
             if (keys.length > 0) {
                 out += colorize("parenthesis", "(")
-                let first = true
-                keys.forEach((key) => {
-                    if (!first)
-                        out += colorize("comma", ",") + " "
-                    else
-                        first = false
-                    out += colorize("key", key) + colorize("colon", ":") + " "
+                out += keys.map((key) => {
+                    let item = colorize("key", key) + colorize("colon", ":") + " "
                     const value = node.A[key]
                     switch (typeof value) {
                         case "boolean":
                         case "number":
-                            out += colorize("value", value.toString())
+                            item += colorize("value", value.toString())
                             break
                         case "string": {
                             /* eslint no-control-regex: off */
-                            out += colorize("value", "\"" +
+                            item += colorize("value", "\"" +
                                 value.replace(/\\/g, "\\\\")
                                     .replace(/"/g, "\\\"")
                                     .replace(/\x08/g, "\\b")
@@ -124,15 +119,16 @@ export default class ASTYDump {
                         }
                         case "object":
                             if (value instanceof RegExp)
-                                out += colorize("value", "/" + value.source + "/")
+                                item += colorize("value", "/" + value.source + "/")
                             else
-                                out += colorize("value", JSON.stringify(value))
+                                item += colorize("value", JSON.stringify(value))
                             break
                         default:
-                            out += colorize("value", JSON.stringify(value))
+                            item += colorize("value", JSON.stringify(value))
                             break
                     }
-                })
+                    return item
+                }).join(colorize("comma", ",") + " ")
                 out += colorize("parenthesis", ")") + " "
             }
 
