@@ -218,18 +218,17 @@ export default class ASTYBase {
             pos = this.C.length + pos
         if (!(pos >= 0 && pos <= this.C.length))
             throw new Error("ins: invalid position")
-        const _ins = (node: ASTYChildSpec) => {
-            if (!this.ctx.isA(node))
-                throw new Error("ins: invalid AST node argument")
-            this.C.splice(pos++, 0, node)
-            node.P = this
-        }
-        args.forEach((arg) => {
+        const _ins = (arg: ASTYChildSpec) => {
             if (Array.isArray(arg))
                 arg.forEach((child) => { _ins(child) })
-            else if (arg !== null)
-                _ins(arg)
-        })
+            else if (arg !== null) {
+                if (!this.ctx.isA(arg))
+                    throw new Error("ins: invalid AST node argument")
+                this.C.splice(pos++, 0, arg)
+                arg.P = this
+            }
+        }
+        args.forEach((arg) => { _ins(arg) })
         return this
     }
 
@@ -237,18 +236,17 @@ export default class ASTYBase {
     add (this: ASTYNodeT, ...args: ASTYChildSpec[]): ASTYNodeT {
         if (args.length === 0)
             throw new Error("add: invalid number of arguments")
-        const _add = (node: ASTYChildSpec) => {
-            if (!this.ctx.isA(node))
-                throw new Error("add: invalid AST node argument")
-            this.C.push(node)
-            node.P = this
-        }
-        args.forEach((arg) => {
+        const _add = (arg: ASTYChildSpec) => {
             if (Array.isArray(arg))
                 arg.forEach((child) => { _add(child) })
-            else if (arg !== null)
-                _add(arg)
-        })
+            else if (arg !== null) {
+                if (!this.ctx.isA(arg))
+                    throw new Error("add: invalid AST node argument")
+                this.C.push(arg)
+                arg.P = this
+            }
+        }
+        args.forEach((arg) => { _add(arg) })
         return this
     }
 
