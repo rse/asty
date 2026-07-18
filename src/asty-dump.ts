@@ -140,7 +140,7 @@ export default class ASTYDump {
             out += colorize("position",
                 colorize("bracket", "[") +
                 colorize("line", String(node.L.L)) +
-                colorize("slash", ",") +
+                colorize("comma", ",") +
                 colorize("column", String(node.L.C)) +
                 colorize("bracket", "]"))
 

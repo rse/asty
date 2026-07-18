@@ -177,7 +177,7 @@ default export) and `ASTYNode`:
   nodes are dumped. The parameter `colorize` is an optional callback function,
   intended to colorize the output `txt` fragments according to their `type`.
   The following `type` strings are supported: `tree`, `type`, `parenthesis`, `comma`,
-  `key`, `colon`, `value`, `position`, `bracket`, `line`, `slash`, and `column`.
+  `key`, `colon`, `value`, `position`, `bracket`, `line`, and `column`.
   If `unicode` is set to `false`, ASCII substitution characters are used
   for the tree structure.
 
