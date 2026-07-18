@@ -49,7 +49,7 @@ export default class ASTYMerge {
             this.pos(pos.line, pos.column, pos.offset)
         }
         node.attrs().forEach((attrSource: string) => {
-            const attrTarget = (Object.hasOwn(attrMap, attrSource) ?
+            const attrTarget = (attrMap[attrSource] !== undefined ?
                 attrMap[attrSource] : attrSource)
             if (attrTarget !== null)
                 this.set(attrTarget, node.get(attrSource))
