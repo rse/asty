@@ -84,13 +84,12 @@ export default class ASTYCtx {
         if (m === null)
             throw new Error("failed to parse own version")
         const [ , major, minor, micro ] = m
-        const version = {
+        return {
             major: Number.parseInt(major, 10),
             minor: Number.parseInt(minor, 10),
             micro: Number.parseInt(micro, 10),
             date:  pkg["x-date"] ?? "????-??-??"
         } satisfies ASTYVersion
-        return version
     }
 
     extend (mixin: ASTYMixin): this {
