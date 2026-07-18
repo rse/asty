@@ -80,8 +80,8 @@ export default class ASTYDump {
                     prefix = `${unicode ? tree.last.unicode : tree.last.ascii}${prefix}`
                 for (let parent = node.P; parent !== null && parent !== self; parent = parent.P) {
                     if (parent.P !== null) {
-                        const { nth, max } = nodeIndex(parent)
-                        if (nth < max)
+                        const { nth: pnth, max: pmax } = nodeIndex(parent)
+                        if (pnth < pmax)
                             prefix = `${unicode ? tree.down.unicode : tree.down.ascii}   ${prefix}`
                         else
                             prefix = `    ${prefix}`
