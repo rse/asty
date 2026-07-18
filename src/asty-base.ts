@@ -224,8 +224,13 @@ export default class ASTYBase {
             else if (arg !== null && arg !== undefined) {
                 if (!this.ctx.isA(arg))
                     throw new Error("ins: invalid AST node argument")
-                if (arg.P !== null)
+                if (arg.P !== null) {
+                    const old  = arg.P.C.indexOf(arg)
+                    const same = (arg.P === this)
                     arg.P.del(arg)
+                    if (same && old >= 0 && old < pos)
+                        pos--
+                }
                 this.C.splice(pos++, 0, arg)
                 arg.P = this
             }
