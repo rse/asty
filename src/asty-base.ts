@@ -221,7 +221,7 @@ export default class ASTYBase {
         }
         args.forEach((arg) => {
             if (typeof arg === "object" && Array.isArray(arg))
-                arg.forEach((arg) => { _ins(arg) })
+                arg.forEach((child) => { _ins(child) })
             else if (arg !== null)
                 _ins(arg)
         })
@@ -240,7 +240,7 @@ export default class ASTYBase {
         }
         args.forEach((arg) => {
             if (typeof arg === "object" && Array.isArray(arg))
-                arg.forEach((arg) => { _add(arg) })
+                arg.forEach((child) => { _add(child) })
             else if (arg !== null)
                 _add(arg)
         })
