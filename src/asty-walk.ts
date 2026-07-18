@@ -28,8 +28,6 @@ export type ASTYWalkDirection = "downward" | "upward" | "both"
 export type ASTYWalkCallback = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: string) => void
 
 export default class ASTYWalk {
-    public C!: ASTYNodeT[]
-
     /*  walk the AST recursively  */
     walk (this: ASTYNodeT, cb: ASTYWalkCallback, when: ASTYWalkDirection = "downward"): ASTYNodeT {
         const _walk = (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null) => {
