@@ -121,7 +121,8 @@ default export) and `ASTYNode`:
 - `ASTYNode#unset(key: string | string[]): this`:<br/>
   Unset a single attribute `key` or unset multiple attributes.
 
-- `ASTYNode#get(key: string | string[]): ASTYAttributeValue`:<br/>
+- `ASTYNode#get(key: string): ASTYAttributeValue`:<br/>
+  `ASTYNode#get(key: string[]): ASTYAttributeValue[]`:<br/>
   Get value of a particular attribute `key`,
   or get array of values corresponding to each key in `key`.
 
