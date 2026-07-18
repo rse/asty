@@ -224,6 +224,8 @@ export default class ASTYBase {
             else if (arg !== null && arg !== undefined) {
                 if (!this.ctx.isA(arg))
                     throw new Error("ins: invalid AST node argument")
+                if (arg.P !== null)
+                    arg.P.del(arg)
                 this.C.splice(pos++, 0, arg)
                 arg.P = this
             }
@@ -242,6 +244,8 @@ export default class ASTYBase {
             else if (arg !== null && arg !== undefined) {
                 if (!this.ctx.isA(arg))
                     throw new Error("add: invalid AST node argument")
+                if (arg.P !== null)
+                    arg.P.del(arg)
                 this.C.push(arg)
                 arg.P = this
             }
