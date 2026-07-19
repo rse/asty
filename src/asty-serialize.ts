@@ -70,7 +70,7 @@ export default class ASTYSerialize {
                 })
             }
             if (node.C.length > 0)
-                clone.C = node.C.map((C: ASTYNodeT) => serializeNode(C))
+                clone.C = node.C.map(serializeNode)
             return clone
         }
         if (!asty.isA(node))
@@ -100,7 +100,7 @@ export default class ASTYSerialize {
                     node.set(key, clone.A![key])
                 })
             if (Array.isArray(clone.C))
-                node.add(clone.C.map((C: ASTYSerializedNode) => unserializeNode(C)))
+                node.add(clone.C.map(unserializeNode))
             return node
         }
         let obj: unknown
