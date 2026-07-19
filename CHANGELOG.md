@@ -2,10 +2,15 @@
 CHANGELOG
 =========
 
+2.0.2 (2026-07-19)
+------------------
+
+- IMPROVEMENT [docs]: clarify the available transpilation results in README
+
 2.0.1 (2026-07-19)
 ------------------
 
-- BUGFIX: add a "type: module" to package.json
+- BUGFIX [infr]: add a "type: module" to package.json
 
 2.0.0 (2026-07-19)
 ------------------
