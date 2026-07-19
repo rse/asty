@@ -248,20 +248,7 @@ export default class ASTYBase {
     add (this: ASTYNodeT, ...args: ASTYChildSpec[]): ASTYNodeT {
         if (args.length === 0)
             throw new Error("add: invalid number of arguments")
-        const _add = (arg: ASTYChildSpec) => {
-            if (Array.isArray(arg))
-                arg.forEach((child) => { _add(child) })
-            else if (arg !== null && arg !== undefined) {
-                if (!this.ctx.isA(arg))
-                    throw new Error("add: invalid AST node argument")
-                if (arg.P !== null)
-                    arg.P.del(arg)
-                this.C.push(arg)
-                arg.P = this
-            }
-        }
-        args.forEach((arg) => { _add(arg) })
-        return this
+        return this.ins(this.C.length, ...args)
     }
 
     /*  delete child AST node(s)  */
