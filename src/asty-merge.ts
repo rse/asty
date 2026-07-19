@@ -22,11 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import type { ASTYNodeT } from "./asty-base"
-
-interface ASTYAttributeMap {
-    [sourceAttr: string]: string | null
-}
+import type { ASTYNodeT, ASTYAttributeMap } from "./asty-base"
 
 export default class ASTYMerge {
     /*  merge attributes and childs of an AST node  */

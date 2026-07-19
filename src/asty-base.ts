@@ -40,12 +40,17 @@ export interface ASTYPositionInternal {
 export type ASTYAttributeValue = any
 export type ASTYAttributeSet = { [ key: string ]: ASTYAttributeValue }
 
+/*  the attribute name mapping, as accepted by merge  */
+export interface ASTYAttributeMap {
+    [ sourceAttr: string ]: string | null
+}
+
 /*  the composed public AST node type. It is declared here (instead of
     in asty.ts, where it is composed and re-exported from) so that the
     mixin classes can refer to the full node type without creating a
     circular module import.  */
 export interface ASTYNodeT extends ASTYBase {
-    merge (node: ASTYNodeT | null, takePos?: boolean, attrMap?: { [ sourceAttr: string ]: string | null }): this
+    merge (node: ASTYNodeT | null, takePos?: boolean, attrMap?: ASTYAttributeMap): this
     walk (cb: (node: ASTYNodeT, depth: number, parent: ASTYNodeT | null, when?: "downward" | "upward") => void,
         when?: "downward" | "upward" | "both"): this
     dump (maxDepth?: number, colorize?: (type: string, txt: string) => string, unicode?: boolean): string
