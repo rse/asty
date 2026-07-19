@@ -56,7 +56,7 @@ export default Vite.defineConfig(({ mode }) => ({
             tscArgs:        [ "--build", "etc/tsc.json" ],
             prebuild:       true
         }),
-        ...(formats === "umd" ? [ nodePolyfills() ] : []),
+        ...(libFormats.includes("umd") ? [ nodePolyfills() ] : []),
         viteSingleFile()
     ],
     build: {
@@ -69,11 +69,11 @@ export default Vite.defineConfig(({ mode }) => ({
         target:                 "es2022",
         outDir:                 "dst-stage2",
         assetsDir:              "",
-        emptyOutDir:            (mode === "production") && formats !== "umd",
+        emptyOutDir:            (mode === "production") && !libFormats.includes("umd"),
         chunkSizeWarningLimit:  5000,
         assetsInlineLimit:      0,
         sourcemap:              (mode === "development"),
-        minify:                 (mode === "production") && formats === "umd",
+        minify:                 (mode === "production") && libFormats.includes("umd"),
         reportCompressedSize:   (mode === "production")
     }
 }))
