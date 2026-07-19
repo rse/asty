@@ -5,7 +5,16 @@ CHANGELOG
 2.0.2 (2026-07-19)
 ------------------
 
+- IMPROVEMENT [code]: improve typing of ASTYCtx#isA() by using "unknown" instead of "any"
+- IMPROVEMENT [code]: escape more control characters in ASTYNode#dump() output
+- IMPROVEMENT [infr]: support UMD format lists and fix typing in Vite configuration
+- IMPROVEMENT [infr]: also cover the test suite in ESLint linting
 - IMPROVEMENT [docs]: clarify the available transpilation results in README
+- CLEANUP [code]: cleanup and simplify serialization in ASTYNode#serialize()
+- CLEANUP [code]: simplify ASTYNode#add() by internally using ASTYNode#ins()
+- CLEANUP [code]: avoid double definitions and cleanup code in ASTYNode#merge()
+- CLEANUP [code]: use Unicode escapes, simplify code and comment helpers in dump
+- CLEANUP [infr]: cleanup TypeScript, Stx, nodemon and linting configurations
 
 2.0.1 (2026-07-19)
 ------------------
