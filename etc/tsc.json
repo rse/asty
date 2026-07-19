@@ -13,7 +13,7 @@
         "skipLibCheck":            false,
         "declaration":             true,
         "noEmit":                  false,
-        "types":                   [ "mocha" ],
+        "types":                   [],
         "rootDir":                 "../src"
     },
     "include": [
