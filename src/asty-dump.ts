@@ -63,7 +63,6 @@ export default class ASTYDump {
     /*  dump the AST recursively  */
     dump (this: ASTYNodeT, maxDepth = Infinity, colorize: (type: string, txt: string) => string = (type, txt) => txt, unicode = true): string {
         let out = ""
-        const self = this
 
         /*  pre-select the tree glyph variant  */
         const variant = unicode ? "unicode" : "ascii"
@@ -78,7 +77,7 @@ export default class ASTYDump {
                 const { nth, max } = nodeIndex(node)
                 let prefix = `${glyph("left")}${glyph("left")} `
                 prefix = `${glyph(nth < max ? "mid" : "last")}${prefix}`
-                for (let parent = node.P; parent !== null && parent !== self; parent = parent.P) {
+                for (let parent = node.P; parent !== null && parent !== this; parent = parent.P) {
                     if (parent.P !== null) {
                         const { nth: pnth, max: pmax } = nodeIndex(parent)
                         prefix = pnth < pmax ? `${glyph("down")}   ${prefix}` : `    ${prefix}`
