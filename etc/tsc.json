@@ -7,7 +7,6 @@
         "useDefineForClassFields": false,
         "composite":               false,
         "strict":                  true,
-        "strictFunctionTypes":     true,
         "resolveJsonModule":       true,
         "isolatedModules":         false,
         "lib":                     [ "es2022", "dom" ],
