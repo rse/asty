@@ -31,7 +31,7 @@ const formats = process.env.VITE_BUILD_FORMATS ?? "esm"
 
 /*  the build formats, mapped from our external names onto the
     enumeration Vite expects internally (we use "esm", Vite uses "es")  */
-const libFormatsMap: { [ format: string ]: Vite.LibraryFormats } = {
+const libFormatsMap: Record<string, Vite.LibraryFormats | undefined> = {
     esm:  "es",
     es:   "es",
     cjs:  "cjs",
