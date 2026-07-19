@@ -36,6 +36,7 @@ interface Tree {
     left: TreeChars
 }
 
+/*  the tree drawing glyphs  */
 const tree: Tree = {
     mid:  { unicode: String.fromCharCode(9500), ascii: "+" },
     last: { unicode: String.fromCharCode(9492), ascii: "+" },
@@ -43,9 +44,11 @@ const tree: Tree = {
     left: { unicode: String.fromCharCode(9472), ascii: "-" }
 }
 
+/*  convert a character into its uppercase hexadecimal code  */
 const hex = (ch: string) =>
     ch.charCodeAt(0).toString(16).toUpperCase()
 
+/*  determine sibling index and maximum sibling index of a node  */
 const nodeIndex = (node: ASTYNodeT) => {
     let nth = 0
     let max = 0
