@@ -197,9 +197,10 @@ definitions, so the API above is fully typed for TypeScript consumers.
 It is transpiled to JavaScript and this way runs in all current
 JavaScript environments, of course.
 
-Additionally, there are two transpilation results: first, there is a
-compressed `asty.browser.js` for Browser environments. Second, there is
-an uncompressed `asty.node.js` for Node.js environments.
+Additionally, there are three transpilation results: first, there is a
+uncompressed `asty.esm.js` for newer Node environments. Second, there
+is an uncompressed `asty.cjs.js` for older Node.js environments. Third,
+there is a compressed `asty.umd.js` for browser environments.
 
 Alternatives
 ------------
