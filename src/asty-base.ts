@@ -100,7 +100,7 @@ export default class ASTYBase {
         return this.ctx.create(T, A, C)
     }
 
-    /*  check the type of an AST node  */
+    /*  get/set the type of an AST node  */
     type (): string
     type (T: string): this
     type (T?: string): string | this {
@@ -114,7 +114,7 @@ export default class ASTYBase {
             throw new Error("type: invalid number of arguments")
     }
 
-    /*  set the parsing position   */
+    /*  get/set the parsing position  */
     pos (): ASTYPosition
     pos (line: number, column?: number, offset?: number): this
     pos (line?: number, column?: number, offset?: number): ASTYPosition | this {
