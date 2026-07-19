@@ -45,16 +45,16 @@ export default [
     ...pluginTS.configs.stylistic,
     {
         plugins: {
-            "n":         pluginN,
-            "import-x":  pluginImport,
-            "promise":   pluginPromise,
+            "n":          pluginN,
+            "import-x":   pluginImport,
+            "promise":    pluginPromise,
             "@stylistic": pluginStylistic
         },
         files: [ "src/**/*.ts" ],
         languageOptions: {
             ecmaVersion: 2022,
             sourceType:  "module",
-            parser: parserTS,
+            parser:      parserTS,
             parserOptions: {
                 ecmaFeatures: {
                     jsx: false
