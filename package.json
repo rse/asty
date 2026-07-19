@@ -1,6 +1,6 @@
 {
     "name":                              "asty",
-    "version":                           "2.0.1",
+    "version":                           "2.0.2",
     "x-date":                            "2026-07-19",
     "description":                       "Abstract Syntax Tree (AST) Data Structure",
     "keywords":                          [ "ast", "abstract", "syntax", "tree", "data", "structure" ],
