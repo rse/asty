@@ -50,7 +50,7 @@ export default [
             "promise":    pluginPromise,
             "@stylistic": pluginStylistic
         },
-        files: [ "src/**/*.ts" ],
+        files: [ "src/**/*.ts", "tst/**/*.ts" ],
         languageOptions: {
             ecmaVersion: 2022,
             sourceType:  "module",
@@ -63,7 +63,8 @@ export default [
             globals: {
                 ...globals.node,
                 ...globals.browser,
-                ...globals.commonjs
+                ...globals.commonjs,
+                ...globals.mocha
             }
         },
         rules: {
