@@ -55,13 +55,16 @@ export default class ASTYSerialize {
                             clone.A![key] = value
                             break
                         default:
-                            /*  use the slow approach only for non-atomic attributes  */
+                            /*  ensure non-atomic attributes are JSON-serializable  */
                             try {
-                                clone.A![key] = structuredClone(value)
+                                const probe: string | undefined = JSON.stringify(value)
+                                if (probe === undefined)
+                                    throw new Error("non-serializable")
                             }
                             catch {
                                 throw new Error(`serialize: attribute "${key}" has a non-serializable value`)
                             }
+                            clone.A![key] = value
                             break
                     }
                 })
