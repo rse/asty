@@ -27,8 +27,11 @@ import type { ASTYNodeT, ASTYAttributeMap } from "./asty-base"
 export default class ASTYMerge {
     /*  merge attributes and childs of an AST node  */
     merge (this: ASTYNodeT, node: ASTYNodeT | null, takePos = false, attrMap: ASTYAttributeMap = {}): ASTYNodeT {
+        /*  short-circuit  */
         if (node === null)
             return this
+
+        /*  sanity check situation  */
         if (!this.ctx.isA(node))
             throw new Error("merge: invalid AST node argument")
 
@@ -40,24 +43,31 @@ export default class ASTYMerge {
             if (p === node)
                 throw new Error("merge: cannot merge an ancestor AST node")
 
+        /*  handle position  */
         if (takePos) {
             const pos = node.pos()
             this.pos(pos.line, pos.column, pos.offset)
         }
+
+        /*  handle attributes  */
         node.attrs().forEach((attrSource: string) => {
             const attrTarget = (Object.hasOwn(attrMap, attrSource) ?
                 attrMap[attrSource] : attrSource)
             if (attrTarget !== null)
                 this.set(attrTarget, node.get(attrSource))
         })
+
         /*  move over all child AST nodes (childs() already returns a copy)  */
         node.childs().forEach((child: ASTYNodeT) => {
             node.del(child)
             this.add(child)
         })
+
+        /*  delete node from parent  */
         const parent = node.parent()
         if (parent !== null)
             parent.del(node)
+
         return this
     }
 }
