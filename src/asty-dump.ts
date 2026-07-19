@@ -38,10 +38,10 @@ interface Tree {
 
 /*  the tree drawing glyphs  */
 const tree: Tree = {
-    mid:  { unicode: String.fromCharCode(9500), ascii: "+" },
-    last: { unicode: String.fromCharCode(9492), ascii: "+" },
-    down: { unicode: String.fromCharCode(9474), ascii: "|" },
-    left: { unicode: String.fromCharCode(9472), ascii: "-" }
+    mid:  { unicode: "\u251C", ascii: "+" },
+    last: { unicode: "\u2514", ascii: "+" },
+    down: { unicode: "\u2502", ascii: "|" },
+    left: { unicode: "\u2500", ascii: "-" }
 }
 
 /*  convert a character into its uppercase hexadecimal code  */
