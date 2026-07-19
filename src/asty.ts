@@ -108,7 +108,7 @@ export default class ASTYCtx {
         return (new this.ASTYNode()).init(this, type, attrs, childs)
     }
 
-    isA (node: any): node is ASTYNode {
+    isA (node: unknown): node is ASTYNode {
         return (node instanceof this.ASTYNode
             && node.ASTy === true)
     }
